@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        //ng-controller funciona tipo uma biblioteca.
+        //ng-bind pega algo específico da biblioteca, e mostra na tela, é mais seguro que {{banana}}, porém limitado a ser só isso mesmo, enquanto o {{}} pode ser usado para varias coisas.
+        //ng-repeat é um for x in range, e vai indo.
+        //ng-model é tipo um input, oposto do ng-bind, que coloca algo no $scope e pode mostrar em tempo real
+        //ng-click é tipo a função onclick, é um botão.
+        //ng-disabled tranforma TRUE em desabilitado, e FALSE em habilitado.
+        //ng-options é tipo um select, e tem que ser usado com ng-model, e o valor do ng-options tem que ser um array, ou um objeto, ou uma função que retorna um array ou um objeto
+        //ng-class literalmente CSS, só isso mesmo.
+        //ng-style literalmente CSS, só isso mesmo.
+        //ng-show é tipo um if, só que esse mostra se for TRUE, porém só esconde, não elimina.
+        //ng-hide é tipo um if, só que esse esconde se for TRUE, porém só esconde, não elimina.
+        //ng-if é um if, só que esse mostra se for TRUE porém ele elimina o elemento caso contrário, diferente dos anteriores.
+        //ng-include pega coisa de outros arquivos, e precisa de aspas duplas e simples se não explode tudo.
+        //ng-required faz ser obriatório preencher um campo.
+        //ng-minlenght número mínimo de carateres, simples assim.
+        //ng-maxlenght número máximo de carateres, simples assim.
+        //ng-pattern cria uma "máscara", é uma expressão regular, e é confuso, então ir atrás de exemplo.
+
+        //$valid e $invalid são propriedades do formulário, que ficam TRUE ou FALSE dependendo se o formulário é válido ou não, e podem ser usadas para habilitar ou desabilitar botões, por exemplo.
+        //$pristine e $dirty são propriedades do formulário, que ficam TRUE ou FALSE dependendo se o formulário for "virgem" ou não, e podem ser usadas para habilitar ou desabilitar botões, por exemplo.
+        //$error é um objeto do formulário, que fica com as propriedades dos erros, e pode ser usado para mostrar mensagens de erro, por exemplo.
+
+        //<td ng-bind="contato.nome | uppercase"></td> coloca tudo em letra maiúscula.
+        //<td ng-bind="contato.nome | lowercase"></td> coloca tudo em letra minúscula.
+        //<td ng-bind="contato.nome | date:'dd/MM/yyyy'"></td> coloca a data no formato dd/MM/yyyy HH:mm.
+        //<td ng-bind="contato.nome | filter"></td> Filtra um array.
+        //<td ng-bind="contato.nome | orderBy:'criterio'"></td> coloca tudo em ordem do critério.
+        //<td ng-bind="contato.nome | orderBy:'currency'"></td> coloca tudo em ordem de moeda.
+        //<td ng-bind="contato.nome | orderBy:'number'"></td> coloca tudo em ordem numérica.
+        //<td ng-bind="contato.nome | orderBy:'limitTo'"></td> Limita o tamanho de algo.
+
+        //INTEGRAÇÃO COM O BACKEND              
+        //$http
+    </script>
+</head>
