@@ -6,15 +6,19 @@
     <title>DM Shield</title>
     <script src="/FrontEnd/JS/angular.js"></script>
     <script src="/FrontEnd/JS/angular-locale_pt-br.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular-route.min.js"></script>
     <script src="/FrontEnd/JS/app.js"></script>
     <script src="/FrontEnd/JS/Controllers/DMShieldCtrl.js"></script>
     <link rel="stylesheet" href="/FrontEnd/CSS/style.css">
 </head>
 <body ng-controller="DMShieldCtrl">
+    <app-header></app-header>
 
-    <div ng-include="'Views/header.html'"></div>
-    <div>banna</div>
-    <div ng-include="'Views/footer.html'"></div>
+    <main>
+        <div ng-view></div>
+    </main>
+
+    <app-footer></app-footer>
 
 </body>
 </html>
