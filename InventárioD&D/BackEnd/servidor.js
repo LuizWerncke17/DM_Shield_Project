@@ -1,69 +1,74 @@
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
 
 const app = express();
+const PORT = 3000;
 
-// Permitir JSON
+app.use(cors());
 app.use(express.json());
 
-// Permitir requisições do Angular
-app.use(cors());
-
-// 🔌 conexão com banco
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '', 
-    database: 'lista_telefonica'
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "dmshield"
 });
 
-// Testar conexão
-db.connect((err) => {
+db.connect(err => {
+  if (err) {
+    console.log("Erro ao conectar:", err);
+  } else {
+    console.log("Conectado ao MySQL!");
+  }
+});
+
+app.get("/", (req, res) => {
+  res.send("API funcionando!");
+});
+
+
+
+
+
+app.get('/inimigos', (req, res) => {
+  db.query('SELECT * FROM inimigos', (err, results) => {
     if (err) {
-        console.error('Erro ao conectar:', err);
-    } else {
-        console.log('Conectado ao MySQL!');
+      return res.status(500).send(err);
     }
+
+    // converter JSON string em objeto
+    const inimigos = results.map(inimigo => ({
+      ...inimigo,
+      dados: JSON.parse(inimigo.dados)
+    }));
+
+    res.send(inimigos);
+  });
 });
 
-app.get('/contatos', (req, res) => {
-    db.query('SELECT * FROM contatos', (err, results) => {
-        if (err) {
-            res.status(500).json(err);
-        } else {
-            res.json(results);
-        }
-    });
+
+
+
+
+
+
+app.post('/inimigos', (req, res) => {
+  const { nome, tipo, vida, ca, dados } = req.body;
+
+  const sql = 'INSERT INTO inimigos (nome, tipo, vida, ca, dados) VALUES (?, ?, ?, ?, ?)';
+
+  db.query(sql, [nome, tipo, vida, ca, JSON.stringify(dados)], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    res.send({ message: 'Inimigo criado!' });
+  });
 });
 
-app.get('/operadoras', (req, res) => {
-    db.query('SELECT * FROM operadoras', (err, results) => {
-        if (err) {
-            res.status(500).json(err);
-        } else {
-            res.json(results);
-        }
-    });
-});
 
-app.post('/contatos', (req, res) => {
-    const { nome, telefone, operadora_id } = req.body;
-
-    const sql = `
-        INSERT INTO contatos (nome, telefone, operadora_id, data_criacao)
-        VALUES (?, ?, ?, NOW())
-    `;
-
-    db.query(sql, [nome, telefone, operadora_id], (err, result) => {
-        if (err) {
-            res.status(500).json(err);
-        } else {
-            res.json({ mensagem: 'Contato inserido!' });
-        }
-    });
-});
-
-app.listen(3000, () => {
-    console.log('Servidor rodando em http://localhost:3000');
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

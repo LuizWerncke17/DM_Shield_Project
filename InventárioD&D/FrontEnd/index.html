@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="/FrontEnd/CSS/style.css">
 </head>
 <body ng-controller="DMShieldCtrl">
-    <app-header></app-header>
+    <div ng-include="'Views/header.html'"></div>
 
-    <main>
+    <main class="main">
         <div ng-view></div>
     </main>
 
-    <app-footer></app-footer>
+    <button class="fab" ng-click="novoCombate()">+</button>
+    <app-footer></app-footer> <script>//Essas são as duas formas de colocar outra view aqui, porém essa é mais moderna e precisa do app.js</script>
 
 </body>
 </html>

@@ -1,0 +1,78 @@
+<div>
+
+    <div class="pagesHeader">
+        <h1 style="color: rgb(199, 6, 6);" class="font">Inimigos</h1>
+        <a href="#/AdicionarInimigo" class="addButton" style="color: rgb(199, 6, 6);">Adicionar inimigo</a>
+    </div>
+
+    <div class="containerDivs">
+
+        <div ng-repeat="inimigo in inimigos" class="ficha">
+
+            <div class="title"><h1>{{inimigo.nome}}</h1></div>
+
+            <p><strong>Tipo:</strong> {{inimigo.tipo}}</p>
+            <p><strong>Vida:</strong> {{inimigo.vida}}</p>
+            <p><strong>CA:</strong> {{inimigo.ca}}</p>
+
+            <hr>
+
+            <h3>Atributos</h3>
+            <p>FOR: {{inimigo.dados.atributos.forca}} 
+            ({{calcularMod(inimigo.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.forca)}})
+            </p>
+            <p>DES: {{inimigo.dados.atributos.destreza}}
+                ({{calcularMod(inimigo.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.destreza)}})
+            </p>
+            <p>CON: {{inimigo.dados.atributos.constituicao}}
+                ({{calcularMod(inimigo.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.constituicao)}})
+            </p>
+            <p>INT: {{inimigo.dados.atributos.inteligencia}}
+                ({{calcularMod(inimigo.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.inteligencia)}})
+            </p>
+            <p>SAB: {{inimigo.dados.atributos.sabedoria}}
+                ({{calcularMod(inimigo.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.sabedoria)}})
+            </p>
+            <p>CAR: {{inimigo.dados.atributos.carisma}}
+                ({{calcularMod(inimigo.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.carisma)}})
+            </p>
+
+            <hr>
+
+            <p><strong>ND:</strong> {{inimigo.dados.nd}}</p>
+            <p><strong>XP:</strong> {{inimigo.dados.xp}}</p>
+
+            <hr>
+
+            <h3>Habilidades</h3>
+            <ul>
+            <li ng-repeat="h in inimigo.dados.habilidades">
+                {{h.descricao}}
+            </li>
+            </ul>
+
+            <h3>Resistências</h3>
+            <ul>
+            <li ng-repeat="r in inimigo.dados.resistencias">
+                {{r.descricao}}
+            </li>
+            </ul>
+
+            <h3>Imunidades</h3>
+            <ul>
+            <li ng-repeat="i in inimigo.dados.imunidades">
+                {{i.descricao}}
+            </li>
+            </ul>
+
+            <h3>Ataques</h3>
+            <ul>
+            <li ng-repeat="a in inimigo.dados.ataques">
+                <strong>{{a.nome}}:</strong> {{a.dano}}
+            </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
