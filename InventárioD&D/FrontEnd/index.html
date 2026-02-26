@@ -8,7 +8,9 @@
     <script src="/FrontEnd/JS/angular-locale_pt-br.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular-route.min.js"></script>
     <script src="/FrontEnd/JS/app.js"></script>
+    <script src="/FrontEnd/JS/Services/CombateService.js"></script>
     <script src="/FrontEnd/JS/Controllers/DMShieldCtrl.js"></script>
+    <script src="/FrontEnd/JS/Controllers/CombateCtrl.js"></script>
     <link rel="stylesheet" href="/FrontEnd/CSS/style.css">
 </head>
 <body ng-controller="DMShieldCtrl">
@@ -18,7 +20,8 @@
         <div ng-view></div>
     </main>
 
-    <button class="fab" ng-click="novoCombate()">+</button>
+    <button class="fab" ng-click="iniciarCombate()">⚔️</button>
+    <button ng-click="irParaCombate()" class="botaoCombate">Ir para combate</button>
     <app-footer></app-footer> <script>//Essas são as duas formas de colocar outra view aqui, porém essa é mais moderna e precisa do app.js</script>
 
 </body>

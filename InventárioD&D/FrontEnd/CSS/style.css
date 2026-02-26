@@ -7,20 +7,24 @@
     src: url(/FrontEnd/CSS/Fontes/OldLondon.ttf);
 }
 @font-face {
-    font-family: "VelhoOeste";
-    src: url(/FrontEnd/CSS/Fontes/Revorioum.ttf);
+    font-family: "FonteNormal";
+    src: url(/FrontEnd/CSS/Fontes/DragonHunter.otf);
 }
 
 .font {
     font-family: "OldLondon";
     font-size: 250%;
+    color: rgb(199, 6, 6);
 }
 
 .title {
     display: flex;
+    align-items: center;
+    height: 60px;
     justify-content: center;
     font-family: "TitulosGrandes";
-    color: #c70606;
+    font-size: 150%;
+    color: #f5c542;
     text-shadow: 0 0 5px #850101;
 }
 
@@ -40,12 +44,41 @@ a:active {
   transform: translateY(2px); 
 }
 
+button:active {
+    transform: translateY(2px); 
+}
+
 body {
     margin: 0;
     background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
     padding-top: 80px;
     padding-bottom: 40px;
 }
+
+hr {
+  border: 1px solid #333;
+}
+
+h1 {
+    text-align: center;
+}
+
+.inputTitles {
+    color: rgb(199, 6, 6);
+    font-family: "OldLondon";
+    font-size: 300%;
+}
+
+.inputSubtitles {
+    color: rgb(199, 6, 6);
+    font-family: "OldLondon";
+    font-size: 200%;
+}
+
+
+
+
+
 
 .pagesHeader {
     display: flex;
@@ -55,6 +88,7 @@ body {
 
 .addButton {
     margin: 1%;
+    color: rgb(199, 6, 6);
     background-color: rgb(59, 59, 160);
     text-align: center;
     font-size: 150%;
@@ -138,10 +172,192 @@ body {
   margin-bottom: 20px;
   color: #ddd;
   box-shadow: 0 0 10px #550000;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
-hr {
-  border: 1px solid #333;
+.EnemiesInfo1 {
+    display: flex;
+    justify-content: space-around;
+    height: 30px;
+    align-items: center;
+}
+
+.enemiesTipe {
+    text-align: center;
+    margin-top: -1px;
+}
+
+.filtros {
+    display: flex;
+    gap: 90px;
+    justify-content: space-evenly;
+}
+
+.inputFiltro {
+    background-color: #0f0f0f;
+    border: 1px solid rgb(199, 6, 6);
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.3s;
+    width: 130px;
+}
+
+.inputFiltro::placeholder {
+    color: #777;
+}
+
+.selectFiltro {
+    background-color: #0f0f0f;
+    border: 1px solid rgb(199, 6, 6);
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.addCombat {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    background-color: rgb(59, 59, 160);
+    font-size: 120%;
+    font-family: "OldLondon";
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px #5a0f8b; 
+    color: rgb(199, 6, 6);
+    transition: all 0.2s ease;
+}
+
+.addCombat:hover {
+    color: #aaa;
+    background-color: #530985;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.atributes {
+    display: flex;
+    justify-content: space-around;
+    height: 30px;
+    align-items: center;
+}
+
+
+/* Container principal */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: rgb(199, 6, 6);
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgb(199, 6, 6);
+    background: #1e1e2f;
+    color: #eee;
+    transition: 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #530985;
+    box-shadow: 0 0 6px #530985;
+}
+
+/* Boxes (habilidades / ataques) */
+.habilidade-box,
+.ataque-box {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    background: #2b1b3a; /* roxo escuro */
+    padding: 10px;
+    border-radius: 8px;
+    align-items: center;
+    border: 1px solid #5a0f8b;
+}
+
+/* Inputs dentro das boxes */
+.habilidade-box input,
+.ataque-box input {
+    flex: 1;
+}
+
+/* Botões adicionar habilidade/ataque */
+.buttonAddSkill {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    background: rgb(59, 59, 160);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 0 10px #5a0f8b;
+}
+
+.buttonAddSkill:hover {
+    background: #530985;
+    transform: scale(1.05);
+}
+
+/* Botão principal salvar */
+.addEntityButton {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+    background: rgb(199, 6, 6);
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 0 12px #5a0f8b;
+}
+
+.addEntityButton:hover {
+    background: #530985;
+    transform: scale(1.03);
+}
+
+/* Atributos (inputs menores) */
+.ataque-box input[type="number"] {
+    max-width: 100px;
+}
+
+/* Layout de atributos */
+.ataque-box {
+    flex-wrap: wrap;
+}
+
+/* Modificador (+1 etc) */
+.ataque-box span {
+    align-self: center;
+    font-weight: bold;
+    color: rgb(199, 6, 6);
 }
 
 
@@ -150,11 +366,32 @@ hr {
 
 
 
+
+
+.botaoCombate:hover {
+    color: #aaa;
+    background-color: #530985;
+    transform: scale(1.05);
+    box-shadow: 0 0 5px #530985;
+}
+
+.botaoCombate {
+    position: fixed;
+    bottom: 35px; 
+    right: 20px;
+    width: 90px;
+    height: 40px;
+    border-radius:30%;
+    transition: all 0.2s ease;
+    background: #8b0000;
+    color: white;
+    box-shadow: 0 0 5px #ff0000;
+}
 
 .fab {
     position: fixed;
-    bottom: 30px; 
-    right: 20px;
+    bottom: 95px; 
+    right: 35px;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -173,7 +410,6 @@ hr {
     background: #ff2a2a;
     box-shadow: 0 0 15px #ff0000;
 }
-
 
 .footer {
     position: fixed;

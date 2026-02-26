@@ -1,7 +1,28 @@
-angular.module('DMShield').controller('DMShieldCtrl', function($scope, $http) {
-    $scope.app = "DM Shield";
+angular.module('DMShield').controller('DMShieldCtrl', function($scope, $http, $location, CombateService) {
 
-     // modelo inicial
+  $scope.iniciarCombate = function() {
+      CombateService.iniciar();
+      alert("Combate iniciado!");
+  };
+
+  $scope.irParaCombate = function() {
+      $location.path('/combate');
+  };
+
+  $scope.combate = CombateService.getCombate();
+
+  $scope.adicionarAoCombate = function(inimigo) {
+    if (!$scope.combate.ativo) {
+        alert("Inicie um combate primeiro!");
+        return;
+    }
+
+    CombateService.adicionarInimigo(inimigo);
+  };
+
+  $scope.app = "DM Shield";
+
+  // modelo inicial
   $scope.novoInimigo = {
     nome: '',
     tipo: '',
@@ -17,8 +38,8 @@ angular.module('DMShield').controller('DMShieldCtrl', function($scope, $http) {
             carisma: ""
         },
         habilidades: [],
-        resistencias: [],
-        imunidades: [],
+        resistencias: "Nenhuma",
+        imunidades: "Nenhuma",
         ataques: [],
         nd: "",
         xp: "",
@@ -46,66 +67,18 @@ angular.module('DMShield').controller('DMShieldCtrl', function($scope, $http) {
     $scope.novoInimigo.dados.habilidades.splice(index, 1);
   };
 
-
-  $scope.adicionarResistencia = function() {
-    $scope.novoInimigo.dados.resistencias.push({
-      descricao: '',
-    });
-  };
-  $scope.removerResistencia = function(index) {
-    $scope.novoInimigo.dados.resistencias.splice(index, 1);
-  };
-
-
-  $scope.adicionarImunidade = function() {
-    $scope.novoInimigo.dados.imunidades.push({
-      descricao: '',
-    });
-  };
-  $scope.removerImunidade = function(index) {
-    $scope.novoInimigo.dados.imunidades.splice(index, 1);
-  };
-
   // salvar no backend
   $scope.salvarInimigo = function() {
     $http.post('http://localhost:3000/inimigos', $scope.novoInimigo)
-      .then(function(response) {
-        alert("Inimigo salvo!");
-
-        // resetar formulário
-        $scope.novoInimigo = {
-          nome: '',
-          tipo: '',
-          vida: "",
-          ca: "",
-          dados: {
-            atributos: {
-                forca: "",
-                destreza: "",
-                constituicao: "",
-                inteligencia: "",
-                sabedoria: "",
-                carisma: ""
-            },
-            habilidades: [],
-            resistencias: [],
-            imunidades: [],
-            ataques: [],
-            nd: "",
-            xp: "",
-          }
-        };
-
-      })
-      .catch(function(err) {
-        console.error(err);
-        alert("Erro ao salvar");
+      .then(() => {
+        alert("Inimigo Salvo!")
+        $scope.carregarInimigos();
+        $location.path('/Inimigos');
       });
-  };
+    };
 
     $scope.calcularMod = function(valor) {
         if (valor === undefined || valor === null) return 0;
-
         return Math.floor((valor - 10) / 2);
     };
 
@@ -122,6 +95,12 @@ angular.module('DMShield').controller('DMShieldCtrl', function($scope, $http) {
         });
     };
 
-    $scope.carregarInimigos();
+    $scope.buscarNome = function(inimigo) {
+      if (!$scope.buscaNome) return true;
+      return inimigo.dados.nome >= $scope.buscaNome;
+    };
+
+  $scope.carregarInimigos();
 
 });
+

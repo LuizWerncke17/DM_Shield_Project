@@ -1,46 +1,60 @@
 <div>
-
     <div class="pagesHeader">
-        <h1 style="color: rgb(199, 6, 6);" class="font">Inimigos</h1>
-        <a href="#/AdicionarInimigo" class="addButton" style="color: rgb(199, 6, 6);">Adicionar inimigo</a>
+        <h1 class="font">Inimigos</h1>
+        <a href="#/AdicionarInimigo" class="addButton">Adicionar inimigo</a>
     </div>
+    <div class="filtros">
+
+        <input type="text"
+            ng-model="buscaNome"
+            placeholder="Buscar inimigo..."
+            class="inputFiltro">
+
+        <select ng-model="ordenacao" class="selectFiltro">
+            <option value="nome">Nome (A-Z)</option>
+            <option value="-nome">Nome (Z-A)</option>
+            <option value="dados.nd">ND (Crescente)</option>
+            <option value="-dados.nd">ND (Decrescente)</option>
+        </select>
+
+    </div>
+
+    <br><br>
 
     <div class="containerDivs">
 
-        <div ng-repeat="inimigo in inimigos" class="ficha">
+        <div ng-repeat="inimigo in inimigos | filter: {nome: buscaNome} | orderBy:ordenacao" class="ficha">
 
             <div class="title"><h1>{{inimigo.nome}}</h1></div>
-
-            <p><strong>Tipo:</strong> {{inimigo.tipo}}</p>
-            <p><strong>Vida:</strong> {{inimigo.vida}}</p>
-            <p><strong>CA:</strong> {{inimigo.ca}}</p>
-
+            <h5 class="enemiesTipe" style="color: darkgrey;"> {{inimigo.tipo}}</h5>
+            <button ng-disabled="!combate.ativo" ng-click="adicionarAoCombate(inimigo)" class="addCombat">
+                Adicionar ao Combate
+            </button>
             <hr>
 
-            <h3>Atributos</h3>
-            <p>FOR: {{inimigo.dados.atributos.forca}} 
-            ({{calcularMod(inimigo.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.forca)}})
-            </p>
-            <p>DES: {{inimigo.dados.atributos.destreza}}
-                ({{calcularMod(inimigo.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.destreza)}})
-            </p>
-            <p>CON: {{inimigo.dados.atributos.constituicao}}
-                ({{calcularMod(inimigo.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.constituicao)}})
-            </p>
-            <p>INT: {{inimigo.dados.atributos.inteligencia}}
-                ({{calcularMod(inimigo.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.inteligencia)}})
-            </p>
-            <p>SAB: {{inimigo.dados.atributos.sabedoria}}
-                ({{calcularMod(inimigo.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.sabedoria)}})
-            </p>
-            <p>CAR: {{inimigo.dados.atributos.carisma}}
-                ({{calcularMod(inimigo.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.carisma)}})
-            </p>
-
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{inimigo.vida}}</p>
+                <p><strong>CA:</strong> {{inimigo.ca}}</p>
+                <p><strong>ND:</strong> {{inimigo.dados.nd}}  ({{inimigo.dados.xp}}  XP)</p>
+            </div>
             <hr>
 
-            <p><strong>ND:</strong> {{inimigo.dados.nd}}</p>
-            <p><strong>XP:</strong> {{inimigo.dados.xp}}</p>
+            <div class="atributes">
+                <h4>FOR: {{inimigo.dados.atributos.forca}} </h4>
+                <h4>DES: {{inimigo.dados.atributos.destreza}}</h4>
+                <h4>CON: {{inimigo.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{inimigo.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{inimigo.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{inimigo.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(inimigo.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(inimigo.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(inimigo.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(inimigo.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(inimigo.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(inimigo.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(inimigo.dados.atributos.carisma)}})</h4>
+            </div>
 
             <hr>
 
@@ -52,18 +66,10 @@
             </ul>
 
             <h3>Resistências</h3>
-            <ul>
-            <li ng-repeat="r in inimigo.dados.resistencias">
-                {{r.descricao}}
-            </li>
-            </ul>
+            <ul><li>{{inimigo.dados.resistencias}}</li></ul>
 
             <h3>Imunidades</h3>
-            <ul>
-            <li ng-repeat="i in inimigo.dados.imunidades">
-                {{i.descricao}}
-            </li>
-            </ul>
+            <ul><li>{{inimigo.dados.imunidades}}</li></ul>
 
             <h3>Ataques</h3>
             <ul>

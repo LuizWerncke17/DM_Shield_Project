@@ -10,6 +10,7 @@ angular.module('DMShield', ['ngRoute'])
   .when('/Mundo', { templateUrl: 'Views/Mundo.html' })
   .when('/Anotacoes', { templateUrl: 'Views/Anotacoes.html' })
   .when('/Criador', { templateUrl: 'Views/Criador.html' })
+  .when('/combate', {templateUrl: 'Views/Combate.html',controller: 'CombateCtrl'})
 
 
   .when('/AdicionarInimigo', { templateUrl: 'Views/Inputs/AdicionarInimigo.html' })
@@ -19,3 +20,4 @@ angular.module('DMShield', ['ngRoute'])
   templateUrl: 'Views/footer.html',
   controller: function(){ /* ... */ }
 });
+

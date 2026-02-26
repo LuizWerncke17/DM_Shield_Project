@@ -1,0 +1,90 @@
+<div class="combate" ng-controller="CombateCtrl">
+
+    <h2>Adicionar Jogador</h2>
+
+    <input type="text" ng-model="novoJogador.nome" placeholder="Nome">
+    <input type="number" ng-model="novoJogador.iniciativa" placeholder="Iniciativa">
+
+    <button ng-click="adicionarJogador()">Adicionar</button>
+
+    <h1>Combate</h1>
+
+    <h2>Fichas</h2>
+
+    <!-- mostra uma única ficha de cada tipo de inimigo adicionado -->
+    <div class="containerDivs">
+        <div ng-repeat="ficha in getFichasUnicas()" class="ficha">
+            <div class="title"><h1>{{ficha.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;"> {{ficha.tipo}}</h5>
+
+            <hr>
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{ficha.vida}}</p>
+                <p><strong>CA:</strong> {{ficha.ca}}</p>
+                <p><strong>ND:</strong> {{ficha.dados.nd}}  ({{ficha.dados.xp}}  XP)</p>
+            </div>
+            <hr>
+
+            <div class="atributes">
+                <h4>FOR: {{ficha.dados.atributos.forca}} </h4>
+                <h4>DES: {{ficha.dados.atributos.destreza}}</h4>
+                <h4>CON: {{ficha.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{ficha.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{ficha.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{ficha.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(ficha.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.carisma)}})</h4>
+            </div>
+
+            <hr>
+            <h3>Habilidades</h3>
+            <ul>
+                <li ng-repeat="h in ficha.dados.habilidades">
+                    {{h.descricao}}
+                </li>
+            </ul>
+
+            <h3>Resistências</h3>
+            <ul><li>{{ficha.dados.resistencias}}</li></ul>
+
+            <h3>Imunidades</h3>
+            <ul><li>{{ficha.dados.imunidades}}</li></ul>
+
+            <h3>Ataques</h3>
+            <ul>
+                <li ng-repeat="a in ficha.dados.ataques">
+                    <strong>{{a.nome}}:</strong> {{a.dano}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div ng-repeat="c in combate.inimigos track by c.instanceId">
+
+        <h3>{{c.nome}}</h3>
+
+        <label>Vida:</label>
+        <input type="number" ng-model="c.vidaAtual">
+
+        <label>Iniciativa:</label>
+        <input type="number" ng-model="c.iniciativa" ng-model-options="{ getterSetter: false }">
+
+        <label>Status:</label>
+        <input type="text" ng-model="c.status">
+
+    </div>
+
+    <br><br>
+    <h2>Ordem:</h2>
+
+    <div ng-repeat="t in getTurnos() track by t.instanceId">
+        {{t.nome}} - {{t.iniciativa}}
+    </div>
+
+</div>
