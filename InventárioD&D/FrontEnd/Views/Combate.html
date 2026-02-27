@@ -1,14 +1,15 @@
 <div class="combate" ng-controller="CombateCtrl">
 
+    <h1 class="inputTitles">Combate</h1>
+
     <h2>Adicionar Jogador</h2>
 
-    <input type="text" ng-model="novoJogador.nome" placeholder="Nome">
-    <input type="number" ng-model="novoJogador.iniciativa" placeholder="Iniciativa">
+    <input type="text" ng-model="novoJogador.nome" placeholder="Nome" class="inputCombat">
+    <input type="number" ng-model="novoJogador.iniciativa" placeholder="Iniciativa" class="inputCombat">
 
-    <button ng-click="adicionarJogador()">Adicionar</button>
+    <button ng-click="adicionarJogador()" class="buttonAddSkill">Adicionar</button>
 
-    <h1>Combate</h1>
-
+    <hr>
     <h2>Fichas</h2>
 
     <!-- mostra uma única ficha de cada tipo de inimigo adicionado -->
@@ -65,26 +66,57 @@
         </div>
     </div>
 
-    <div ng-repeat="c in combate.inimigos track by c.instanceId">
+    <hr>
 
-        <h3>{{c.nome}}</h3>
+    <div ng-repeat="c in combate.inimigos track by c.instanceId" class="combate-inimigo">
 
-        <label>Vida:</label>
-        <input type="number" ng-model="c.vidaAtual">
+        <h2>{{c.nome}}</h2> 
 
-        <label>Iniciativa:</label>
-        <input type="number" ng-model="c.iniciativa" ng-model-options="{ getterSetter: false }">
+        <div class="pagesHeader">
+            <label>Vida:</label>
+            <input type="number" ng-model="c.vidaAtual" class="inputCombat">
 
-        <label>Status:</label>
-        <input type="text" ng-model="c.status">
+            <label>Iniciativa:</label>
+            <input type="number" ng-model="c.iniciativa" ng-model-options="{ getterSetter: false }" class="inputCombat">
+
+            <label>Status:</label>
+            <input type="text" ng-model="c.status" class="inputCombat">
+
+            <label>Descrição:</label>
+            <input type="text" class="inputCombat">
+        </div>
 
     </div>
 
-    <br><br>
+    <br>
+    <hr>
     <h2>Ordem:</h2>
 
-    <div ng-repeat="t in getTurnos() track by t.instanceId">
-        {{t.nome}} - {{t.iniciativa}}
-    </div>
+    <button class="buttonAddSkill" ng-click="gerarTurnos()">
+        Gerar Ordem
+    </button>
+
+    <button class="buttonAddSkill" ng-click="proximoTurno()">
+        Próximo Turno
+    </button>
+
+    <table class="tabela-turnos">
+        <thead>
+            <tr>
+                <th>Turno</th>
+                <th>Nome</th>
+                <th>Iniciativa</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="t in getTurnos() track by t.instanceId" ng-class="{'turnoAtual': $index === 0}">
+                
+                <td>{{$index + 1}}</td>
+                <td>{{t.nome}}</td>
+                <td class="iniciativa">{{t.iniciativa}}</td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>

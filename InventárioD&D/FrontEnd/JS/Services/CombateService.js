@@ -3,14 +3,33 @@ angular.module('DMShield').factory('CombateService', function() {
     var combate = {
         ativo: false,
         inimigos: [],
-        jogadores: []
+        jogadores: [],
+        turnos: []
     };
 
     return {
+
+        gerarTurnos: function() {
+            combate.turnos = [...combate.inimigos, ...combate.jogadores]
+            .sort((a, b) => b.iniciativa - a.iniciativa);
+        },
+
+        proximoTurno: function() {
+            if (combate.turnos.length === 0) return;
+
+            let atual = combate.turnos.shift(); // tira o primeiro
+            combate.turnos.push(atual); // joga pro final
+        },
+
+        getTurnos: function() {
+            return combate.turnos;
+        },
+
         iniciar: function() {
             combate.ativo = true;
             combate.inimigos = [];
             combate.jogadores = [];
+            combate.turnos = [];
         },
 
         getCombate: function() {

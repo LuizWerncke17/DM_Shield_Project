@@ -3,32 +3,32 @@
   <h1 class="inputTitles">Criar Inimigo</h1>
 
   <label>Nome:</label>
-  <input type="text" ng-model="novoInimigo.nome">
+  <input type="text" ng-model="novoInimigo.nome" class="inputAdd">
 
   <label>Tipo:</label>
-  <input type="text" ng-model="novoInimigo.tipo" placeholder="Ex: Morto-vivo">
+  <input type="text" ng-model="novoInimigo.tipo" placeholder="Ex: Morto-vivo" class="inputAdd">
 
   <label>Vida:</label>
-  <input type="number" ng-model="novoInimigo.vida">
+  <input type="number" ng-model="novoInimigo.vida" class="inputAdd">
 
   <label>CA:</label>
-  <input type="number" ng-model="novoInimigo.ca">
+  <input type="number" ng-model="novoInimigo.ca" class="inputAdd">
 
     <h2 class="inputSubtitles">Atributos</h2>
 
     <div class="ataque-box">
 
-        <input type="number" placeholder="Força" ng-model="novoInimigo.dados.atributos.forca">
+        <input type="number" placeholder="Força" ng-model="novoInimigo.dados.atributos.forca" class="inputAdd">
         <span>({{calcularMod(novoInimigo.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(novoInimigo.dados.atributos.forca)}}) </span>
-        <input type="number" placeholder="Destreza" ng-model="novoInimigo.dados.atributos.destreza">
+        <input type="number" placeholder="Destreza" ng-model="novoInimigo.dados.atributos.destreza" class="inputAdd">
         <span>({{calcularMod(novoInimigo.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(novoInimigo.dados.atributos.destreza)}}) </span>
-        <input type="number" placeholder="Constituição" ng-model="novoInimigo.dados.atributos.constituicao">
+        <input type="number" placeholder="Constituição" ng-model="novoInimigo.dados.atributos.constituicao" class="inputAdd">
         <span>({{calcularMod(novoInimigo.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(novoInimigo.dados.atributos.constituicao)}}) </span>
-        <input type="number" placeholder="Inteligência" ng-model="novoInimigo.dados.atributos.inteligencia">
+        <input type="number" placeholder="Inteligência" ng-model="novoInimigo.dados.atributos.inteligencia" class="inputAdd">
         <span>({{calcularMod(novoInimigo.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(novoInimigo.dados.atributos.inteligencia)}}) </span>
-        <input type="number" placeholder="Sabedoria" ng-model="novoInimigo.dados.atributos.sabedoria">
+        <input type="number" placeholder="Sabedoria" ng-model="novoInimigo.dados.atributos.sabedoria" class="inputAdd">
         <span>({{calcularMod(novoInimigo.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(novoInimigo.dados.atributos.sabedoria)}}) </span>
-        <input type="number" placeholder="Carisma" ng-model="novoInimigo.dados.atributos.carisma">
+        <input type="number" placeholder="Carisma" ng-model="novoInimigo.dados.atributos.carisma" class="inputAdd">
         <span>({{calcularMod(novoInimigo.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(novoInimigo.dados.atributos.carisma)}}) </span>
 
     </div>
@@ -36,19 +36,19 @@
     <br><br>
 
   <label>ND:</label>
-  <input type="number" ng-model="novoInimigo.dados.nd">
+  <input type="number" ng-model="novoInimigo.dados.nd" class="inputAdd">
 
   <label>XP:</label>
-  <input type="number" ng-model="novoInimigo.dados.xp">
+  <input type="number" ng-model="novoInimigo.dados.xp" class="inputAdd">
 
   <h2 class="inputSubtitles">Habilidades</h2>
 
   <div ng-repeat="habilidade in novoInimigo.dados.habilidades track by $index" class="habilidade-box">
     
     <input type="text" placeholder="Descrição (ex: multi ataque, vantagem em percepção)"
-           ng-model="habilidade.descricao">
+           ng-model="habilidade.descricao" class="inputAdd">
 
-    <button ng-click="removerHabilidade($index)" class="addEnemyButton">Remover</button>
+    <button ng-click="removerHabilidade($index)" class="addEntityButton">Remover</button>
 
   </div>
   <button ng-click="adicionarHabilidade()" class="buttonAddSkill">+ Adicionar habilidade</button>
@@ -58,12 +58,12 @@
 
   <h2>Resistências</h2>
 
-  <input type="text" ng-model="novoInimigo.dados.resistencias" placeholder="Lista (ex: Veneno, Contundente)">
+  <input type="text" ng-model="novoInimigo.dados.resistencias" placeholder="Lista (ex: Veneno, Contundente)" class="inputAdd">
   <br><br>
 
   <h2>Imunidades</h2>
 
-  <input type="text" ng-model="novoInimigo.dados.imunidades" placeholder="Descrição (ex: Veneno, Contundente)">
+  <input type="text" ng-model="novoInimigo.dados.imunidades" placeholder="Descrição (ex: Veneno, Contundente)" class="inputAdd">
   <br><br>
 
   <h2 class="inputSubtitles">Ataques</h2>
@@ -71,10 +71,10 @@
   <div ng-repeat="ataque in novoInimigo.dados.ataques track by $index" class="ataque-box">
     
     <input type="text" placeholder="Nome do ataque"
-           ng-model="ataque.nome">
+           ng-model="ataque.nome" class="inputAdd">
 
     <input type="text" placeholder="Dano (ex: 3d8 veneno)"
-           ng-model="ataque.dano">
+           ng-model="ataque.dano" class="inputAdd">
 
     <button ng-click="removerAtaque($index)" class="addEntityButton">Remover</button>
 

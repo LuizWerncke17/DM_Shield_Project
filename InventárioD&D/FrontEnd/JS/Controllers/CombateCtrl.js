@@ -37,8 +37,15 @@ angular.module('DMShield').controller('CombateCtrl', function($scope, CombateSer
     };
 
     $scope.getTurnos = function() {
-        return [...$scope.combate.inimigos, ...$scope.combate.jogadores]
-            .sort((a, b) => (Number(b.iniciativa) || 0) - (Number(a.iniciativa) || 0));
+        return CombateService.getTurnos();
+    };
+
+    $scope.gerarTurnos = function() {
+        CombateService.gerarTurnos();
+    };
+
+    $scope.proximoTurno = function() {
+        CombateService.proximoTurno();
     };
 
     // expõe uma lista de fichas únicas para consulta na view de combate

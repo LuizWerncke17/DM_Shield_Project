@@ -48,6 +48,7 @@ button:active {
     transform: translateY(2px); 
 }
 
+body::-webkit-scrollbar, body::-webkit-scrollbar-button { display: none; }
 body {
     margin: 0;
     background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
@@ -61,6 +62,14 @@ hr {
 
 h1 {
     text-align: center;
+}
+
+h4 {
+    color: #e0e0e0
+}
+
+h5 {
+    color: #e0e0e0
 }
 
 .inputTitles {
@@ -170,7 +179,7 @@ h1 {
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 20px;
-  color: #ddd;
+  color: #e0e0e0;
   box-shadow: 0 0 10px #550000;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -262,14 +271,21 @@ h1 {
 /* Labels */
 label {
     display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    font-size: 130%;
     font-weight: bold;
     color: rgb(199, 6, 6);
 }
 
-/* Inputs */
-input {
+.inputCombat {
+    padding: 7px;
+    border-radius: 6px;
+    border: 1px solid rgb(199, 6, 6);
+    background: #1e1e2f;
+    color: #eee;
+    transition: 0.2s;
+}
+
+.inputAdd {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
@@ -296,6 +312,7 @@ input:focus {
     border-radius: 8px;
     align-items: center;
     border: 1px solid #5a0f8b;
+    flex-wrap: wrap;
 }
 
 /* Inputs dentro das boxes */
@@ -315,11 +332,16 @@ input:focus {
     cursor: pointer;
     transition: 0.2s;
     box-shadow: 0 0 10px #5a0f8b;
+    margin-top: 10px;
 }
 
 .buttonAddSkill:hover {
     background: #530985;
     transform: scale(1.05);
+}
+
+.buttonAddSkill:active {
+    transform: translateY(2px); 
 }
 
 /* Botão principal salvar */
@@ -343,14 +365,13 @@ input:focus {
     transform: scale(1.03);
 }
 
+.addEntityButton:active {
+    transform: translateY(2px);
+}
+
 /* Atributos (inputs menores) */
 .ataque-box input[type="number"] {
     max-width: 100px;
-}
-
-/* Layout de atributos */
-.ataque-box {
-    flex-wrap: wrap;
 }
 
 /* Modificador (+1 etc) */
@@ -358,6 +379,120 @@ input:focus {
     align-self: center;
     font-weight: bold;
     color: rgb(199, 6, 6);
+}
+
+
+
+
+
+
+
+
+/* ===== CONTAINER COMBATE ===== */
+.combate {
+    max-width: 1400px;
+    margin: auto;
+    padding: 20px;
+    color: #e0e0e0;
+}
+
+/* ===== BLOCO ADICIONAR JOGADOR ===== */
+.combate h2 {
+    font-family: "OldLondon";
+    color: rgb(199, 6, 6);
+    margin-top: 20px;
+}
+
+/* inputs lado a lado */
+.combate .inputCombat {
+    margin: 5px;
+    min-width: 120px;
+}
+
+/* ===== GRID DE FICHAS ===== */
+.containerDivs {
+    margin-top: 20px;
+}
+
+/* ===== CARD DE INIMIGO NO COMBATE ===== */
+.combate-inimigo {
+    background: #1a1a1a;
+    border: 2px solid rgb(199, 6, 6);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 0 10px #550000;
+}
+
+/* título do inimigo */
+.combate-inimigo h2 {
+    text-align: center;
+    font-family: "TitulosGrandes";
+    font-size: 200%;
+    color: #f5c542;
+    text-shadow: 0 0 5px #850101;
+}
+
+/* inputs do inimigo */
+.combate-inimigo .pagesHeader {
+    margin-top: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ===== SEPARADORES ===== */
+.combate hr {
+    margin: 25px 0;
+    border: 1px solid #333;
+}
+
+/* ===== TABELA DE INICIATIVA ===== */
+.tabela-turnos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #111;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px #550000;
+}
+
+/* cabeçalho */
+.tabela-turnos th {
+    background: rgb(59, 59, 160);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-family: "OldLondon";
+    font-size: 120%;
+    border-bottom: 2px solid #5a0f8b;
+}
+
+/* linhas */
+.tabela-turnos td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+/* zebra */
+.tabela-turnos tr:nth-child(even) {
+    background: #1a1a1a;
+}
+
+.tabela-turnos tr:nth-child(odd) {
+    background: #0f0f0f;
+}
+
+/* destaque iniciativa */
+.iniciativa {
+    color: rgb(199, 6, 6);
+    font-weight: bold;
+}
+
+.turnoAtual {
+    background: rgba(199, 6, 6, 0.3) !important;
+    box-shadow: 0 0 10px red;
 }
 
 

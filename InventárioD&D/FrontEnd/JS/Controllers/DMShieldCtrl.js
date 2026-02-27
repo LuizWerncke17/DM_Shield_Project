@@ -75,7 +75,30 @@ angular.module('DMShield').controller('DMShieldCtrl', function($scope, $http, $l
         $scope.carregarInimigos();
         $location.path('/Inimigos');
       });
+
+    $scope.novoInimigo = {
+      nome: '',
+      tipo: '',
+      vida: "",
+      ca: "",
+      dados: {
+          atributos: {
+              forca: "",
+              destreza: "",
+              constituicao: "",
+              inteligencia: "",
+              sabedoria: "",
+              carisma: ""
+          },
+          habilidades: [],
+          resistencias: "Nenhuma",
+          imunidades: "Nenhuma",
+          ataques: [],
+          nd: "",
+          xp: "",
+      }
     };
+  };
 
     $scope.calcularMod = function(valor) {
         if (valor === undefined || valor === null) return 0;
