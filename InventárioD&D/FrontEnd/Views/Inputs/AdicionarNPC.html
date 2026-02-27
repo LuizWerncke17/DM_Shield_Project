@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div class="container">
+
+  <h1 class="inputTitles">{{modoEdicao ? 'Editar NPC' : 'Criar NPC'}}</h1>
+
+  <label>Nome:</label>
+  <input type="text" ng-model="novoNPC.nome" class="inputAdd">
+
+  <label>Raça:</label>
+  <input type="text" ng-model="novoNPC.raca" placeholder="Ex: Gnomo" class="inputAdd">
+
+  <label>Vida:</label>
+  <input type="number" ng-model="novoNPC.vida" class="inputAdd">
+
+  <label>CA:</label>
+  <input type="number" ng-model="novoNPC.ca" class="inputAdd">
+
+    <h2 class="inputSubtitles">Atributos</h2>
+
+    <div class="ataque-box">
+
+        <input type="number" placeholder="Força" ng-model="novoNPC.dados.atributos.forca" class="inputAdd">
+        <span>({{calcularMod(novoNPC.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(novoNPC.dados.atributos.forca)}}) </span>
+        <input type="number" placeholder="Destreza" ng-model="novoNPC.dados.atributos.destreza" class="inputAdd">
+        <span>({{calcularMod(novoNPC.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(novoNPC.dados.atributos.destreza)}}) </span>
+        <input type="number" placeholder="Constituição" ng-model="novoNPC.dados.atributos.constituicao" class="inputAdd">
+        <span>({{calcularMod(novoNPC.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(novoNPC.dados.atributos.constituicao)}}) </span>
+        <input type="number" placeholder="Inteligência" ng-model="novoNPC.dados.atributos.inteligencia" class="inputAdd">
+        <span>({{calcularMod(novoNPC.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(novoNPC.dados.atributos.inteligencia)}}) </span>
+        <input type="number" placeholder="Sabedoria" ng-model="novoNPC.dados.atributos.sabedoria" class="inputAdd">
+        <span>({{calcularMod(novoNPC.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(novoNPC.dados.atributos.sabedoria)}}) </span>
+        <input type="number" placeholder="Carisma" ng-model="novoNPC.dados.atributos.carisma" class="inputAdd">
+        <span>({{calcularMod(novoNPC.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(novoNPC.dados.atributos.carisma)}}) </span>
+
+    </div>
+
+    <br><br>
+
+  <h2>Informações</h2>
+
+  <textarea ng-model="novoNPC.dados.informacoes" placeholder="Lista (ex: Sabe onde está um objeto)" class="inputAdd inputAutoGrow" rows="2" oninput="this.style.height='auto'; this.style.height=this.scrollHeight + 'px';"></textarea>
+  <br><br>
+
+  <h2 class="inputSubtitles">Habilidades</h2>
+
+  <div ng-repeat="habilidade in novoNPC.dados.habilidades track by $index" class="habilidade-box">
+    
+    <input type="text" placeholder="Descrição (ex: multi ataque, vantagem em percepção)"
+           ng-model="habilidade.descricao" class="inputAdd">
+
+    <button ng-click="removerHabilidade($index)" class="addEntityButton">Remover</button>
+
+  </div>
+  <button ng-click="adicionarHabilidade()" class="buttonAddSkill">+ Adicionar habilidade</button>
+  <br><br>
+
+  <h2>Resistências</h2>
+
+  <input type="text" ng-model="novoNPC.dados.resistencias" placeholder="Lista (ex: Veneno, Contundente)" class="inputAdd">
+  <br><br>
+
+  <h2>Imunidades</h2>
+
+  <input type="text" ng-model="novoNPC.dados.imunidades" placeholder="Descrição (ex: Veneno, Contundente)" class="inputAdd">
+  <br><br>
+
+  <h2 class="inputSubtitles">Ataques</h2>
+
+  <div ng-repeat="ataque in novoNPC.dados.ataques track by $index" class="ataque-box">
+    
+    <input type="text" placeholder="Nome do ataque"
+           ng-model="ataque.nome" class="inputAdd">
+
+    <input type="text" placeholder="Dano (ex: 3d8 veneno)"
+           ng-model="ataque.dano" class="inputAdd">
+
+    <button ng-click="removerAtaque($index)" class="addEntityButton">Remover</button>
+
+  </div>
+  <button ng-click="adicionarAtaque()" class="buttonAddSkill">+ Adicionar Ataque</button>
+  <br><br>
+  <button ng-click="salvarNPC()" class="addEntityButton">{{modoEdicao ? 'Salvar Alteracoes' : 'Salvar NPC'}}</button>
+  <button ng-if="modoEdicao" ng-click="cancelarEdicaoNPC()" class="buttonAddSkill">Cancelar Edicao</button>
+
+</div>
+

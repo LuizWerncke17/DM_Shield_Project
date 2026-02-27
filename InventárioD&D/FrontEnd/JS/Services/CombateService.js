@@ -48,7 +48,15 @@ angular.module('DMShield').factory('CombateService', function() {
             copia.iniciativa = "";
             copia.status = "";
 
+            let iguais = combate.inimigos.filter(i => i.inimigoId === inimigo.id).length;
+            copia.numero = iguais + 1;
+
             combate.inimigos.push(copia);
+        },
+
+        removerInimigo: function(instanceId) {
+            combate.inimigos = combate.inimigos.filter(i => i.instanceId !== instanceId);
+            combate.turnos = combate.turnos.filter(t => t.instanceId !== instanceId);
         },
 
         adicionarJogador: function(jogador) {

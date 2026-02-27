@@ -2,30 +2,15 @@
     font-family: "TitulosGrandes";
     src: url(/FrontEnd/CSS/Fontes/DragonBlack.otf);
 }
+
 @font-face {
     font-family: "OldLondon";
     src: url(/FrontEnd/CSS/Fontes/OldLondon.ttf);
 }
+
 @font-face {
     font-family: "FonteNormal";
     src: url(/FrontEnd/CSS/Fontes/DragonHunter.otf);
-}
-
-.font {
-    font-family: "OldLondon";
-    font-size: 250%;
-    color: rgb(199, 6, 6);
-}
-
-.title {
-    display: flex;
-    align-items: center;
-    height: 60px;
-    justify-content: center;
-    font-family: "TitulosGrandes";
-    font-size: 150%;
-    color: #f5c542;
-    text-shadow: 0 0 5px #850101;
 }
 
 a {
@@ -41,14 +26,18 @@ a:hover {
 }
 
 a:active {
-  transform: translateY(2px); 
+    transform: translateY(2px);
 }
 
 button:active {
-    transform: translateY(2px); 
+    transform: translateY(2px);
 }
 
-body::-webkit-scrollbar, body::-webkit-scrollbar-button { display: none; }
+body::-webkit-scrollbar,
+body::-webkit-scrollbar-button {
+    display: none;
+}
+
 body {
     margin: 0;
     background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
@@ -57,57 +46,17 @@ body {
 }
 
 hr {
-  border: 1px solid #333;
+    border: 1px solid #333;
 }
 
 h1 {
     text-align: center;
 }
 
-h4 {
-    color: #e0e0e0
-}
-
+h4,
 h5 {
-    color: #e0e0e0
+    color: #e0e0e0;
 }
-
-.inputTitles {
-    color: rgb(199, 6, 6);
-    font-family: "OldLondon";
-    font-size: 300%;
-}
-
-.inputSubtitles {
-    color: rgb(199, 6, 6);
-    font-family: "OldLondon";
-    font-size: 200%;
-}
-
-
-
-
-
-
-.pagesHeader {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.addButton {
-    margin: 1%;
-    color: rgb(199, 6, 6);
-    background-color: rgb(59, 59, 160);
-    text-align: center;
-    font-size: 150%;
-    font-family: "OldLondon";
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px #5a0f8b; 
-}
-
-
-
 
 .header {
     position: fixed;
@@ -139,15 +88,9 @@ h5 {
     font-size: 150%;
     font-family: "OldLondon";
     border-radius: 8px;
-    box-shadow: 2px 2px 5px #5a0f8b; 
-    text-shadow: 0 0 0px;
+    box-shadow: 2px 2px 5px #5a0f8b;
+    text-shadow: 0 0 0;
 }
-
-
-
-
-
-
 
 .main {
     padding: 10px;
@@ -162,137 +105,13 @@ h5 {
     text-shadow: 0 0 8px #2c0d0d;
 }
 
-
-
-
-
-.containerDivs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.ficha {
-  background: #1a1a1a;
-  width: 29%;
-  border: 2px solid #8b0000;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
-  color: #e0e0e0;
-  box-shadow: 0 0 10px #550000;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-}
-
-.EnemiesInfo1 {
-    display: flex;
-    justify-content: space-around;
-    height: 30px;
-    align-items: center;
-}
-
-.enemiesTipe {
-    text-align: center;
-    margin-top: -1px;
-}
-
-.filtros {
-    display: flex;
-    gap: 90px;
-    justify-content: space-evenly;
-}
-
-.inputFiltro {
-    background-color: #0f0f0f;
-    border: 1px solid rgb(199, 6, 6);
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    outline: none;
-    transition: 0.3s;
-    width: 130px;
-}
-
-.inputFiltro::placeholder {
-    color: #777;
-}
-
-.selectFiltro {
-    background-color: #0f0f0f;
-    border: 1px solid rgb(199, 6, 6);
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    outline: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.addCombat {
-    align-self: center;
-    justify-self: center;
-    display: flex;
-    background-color: rgb(59, 59, 160);
-    font-size: 120%;
-    font-family: "OldLondon";
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px #5a0f8b; 
-    color: rgb(199, 6, 6);
-    transition: all 0.2s ease;
-}
-
-.addCombat:hover {
-    color: #aaa;
-    background-color: #530985;
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-.atributes {
-    display: flex;
-    justify-content: space-around;
-    height: 30px;
-    align-items: center;
-}
-
-
-/* Container principal */
-.container {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-
-/* Labels */
 label {
     display: block;
     font-size: 130%;
     font-weight: bold;
     color: rgb(199, 6, 6);
-}
-
-.inputCombat {
-    padding: 7px;
-    border-radius: 6px;
-    border: 1px solid rgb(199, 6, 6);
-    background: #1e1e2f;
-    color: #eee;
-    transition: 0.2s;
-}
-
-.inputAdd {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid rgb(199, 6, 6);
-    background: #1e1e2f;
-    color: #eee;
-    transition: 0.2s;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 input:focus {
@@ -300,208 +119,6 @@ input:focus {
     border-color: #530985;
     box-shadow: 0 0 6px #530985;
 }
-
-/* Boxes (habilidades / ataques) */
-.habilidade-box,
-.ataque-box {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    background: #2b1b3a; /* roxo escuro */
-    padding: 10px;
-    border-radius: 8px;
-    align-items: center;
-    border: 1px solid #5a0f8b;
-    flex-wrap: wrap;
-}
-
-/* Inputs dentro das boxes */
-.habilidade-box input,
-.ataque-box input {
-    flex: 1;
-}
-
-/* Botões adicionar habilidade/ataque */
-.buttonAddSkill {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    background: rgb(59, 59, 160);
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 0 10px #5a0f8b;
-    margin-top: 10px;
-}
-
-.buttonAddSkill:hover {
-    background: #530985;
-    transform: scale(1.05);
-}
-
-.buttonAddSkill:active {
-    transform: translateY(2px); 
-}
-
-/* Botão principal salvar */
-.addEntityButton {
-    width: 100%;
-    margin-top: 20px;
-    font-size: 16px;
-    background: rgb(199, 6, 6);
-    color: white;
-    padding: 12px 15px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 0 12px #5a0f8b;
-}
-
-.addEntityButton:hover {
-    background: #530985;
-    transform: scale(1.03);
-}
-
-.addEntityButton:active {
-    transform: translateY(2px);
-}
-
-/* Atributos (inputs menores) */
-.ataque-box input[type="number"] {
-    max-width: 100px;
-}
-
-/* Modificador (+1 etc) */
-.ataque-box span {
-    align-self: center;
-    font-weight: bold;
-    color: rgb(199, 6, 6);
-}
-
-
-
-
-
-
-
-
-/* ===== CONTAINER COMBATE ===== */
-.combate {
-    max-width: 1400px;
-    margin: auto;
-    padding: 20px;
-    color: #e0e0e0;
-}
-
-/* ===== BLOCO ADICIONAR JOGADOR ===== */
-.combate h2 {
-    font-family: "OldLondon";
-    color: rgb(199, 6, 6);
-    margin-top: 20px;
-}
-
-/* inputs lado a lado */
-.combate .inputCombat {
-    margin: 5px;
-    min-width: 120px;
-}
-
-/* ===== GRID DE FICHAS ===== */
-.containerDivs {
-    margin-top: 20px;
-}
-
-/* ===== CARD DE INIMIGO NO COMBATE ===== */
-.combate-inimigo {
-    background: #1a1a1a;
-    border: 2px solid rgb(199, 6, 6);
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px 0;
-    box-shadow: 0 0 10px #550000;
-}
-
-/* título do inimigo */
-.combate-inimigo h2 {
-    text-align: center;
-    font-family: "TitulosGrandes";
-    font-size: 200%;
-    color: #f5c542;
-    text-shadow: 0 0 5px #850101;
-}
-
-/* inputs do inimigo */
-.combate-inimigo .pagesHeader {
-    margin-top: 10px;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-/* ===== SEPARADORES ===== */
-.combate hr {
-    margin: 25px 0;
-    border: 1px solid #333;
-}
-
-/* ===== TABELA DE INICIATIVA ===== */
-.tabela-turnos {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background: #111;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px #550000;
-}
-
-/* cabeçalho */
-.tabela-turnos th {
-    background: rgb(59, 59, 160);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-family: "OldLondon";
-    font-size: 120%;
-    border-bottom: 2px solid #5a0f8b;
-}
-
-/* linhas */
-.tabela-turnos td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #333;
-}
-
-/* zebra */
-.tabela-turnos tr:nth-child(even) {
-    background: #1a1a1a;
-}
-
-.tabela-turnos tr:nth-child(odd) {
-    background: #0f0f0f;
-}
-
-/* destaque iniciativa */
-.iniciativa {
-    color: rgb(199, 6, 6);
-    font-weight: bold;
-}
-
-.turnoAtual {
-    background: rgba(199, 6, 6, 0.3) !important;
-    box-shadow: 0 0 10px red;
-}
-
-
-
-
-
-
-
-
 
 .botaoCombate:hover {
     color: #aaa;
@@ -512,11 +129,11 @@ input:focus {
 
 .botaoCombate {
     position: fixed;
-    bottom: 35px; 
+    bottom: 35px;
     right: 20px;
     width: 90px;
     height: 40px;
-    border-radius:30%;
+    border-radius: 30%;
     transition: all 0.2s ease;
     background: #8b0000;
     color: white;
@@ -525,7 +142,7 @@ input:focus {
 
 .fab {
     position: fixed;
-    bottom: 95px; 
+    bottom: 95px;
     right: 35px;
     width: 60px;
     height: 60px;

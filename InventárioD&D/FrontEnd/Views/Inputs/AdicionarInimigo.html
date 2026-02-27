@@ -1,12 +1,29 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
 <div class="container">
 
-  <h1 class="inputTitles">Criar Inimigo</h1>
+  <h1 class="inputTitles">{{modoEdicao ? 'Editar Inimigo' : 'Criar Inimigo'}}</h1>
 
   <label>Nome:</label>
   <input type="text" ng-model="novoInimigo.nome" class="inputAdd">
 
   <label>Tipo:</label>
-  <input type="text" ng-model="novoInimigo.tipo" placeholder="Ex: Morto-vivo" class="inputAdd">
+  <select ng-model="novoInimigo.tipo" class="inputAdd">
+    <option value="" disabled>Selecione um tipo</option>
+    <option value="Aberracoes">Aberrações</option>
+    <option value="Bestas">Bestas</option>
+    <option value="Celestiais">Celestiais</option>
+    <option value="Construtos">Construtos</option>
+    <option value="Dragoes">Dragões</option>
+    <option value="Elementais">Elementais</option>
+    <option value="Fadas">Fadas</option>
+    <option value="Demonios (Fiends)">Demônios (Fiends)</option>
+    <option value="Gigantes">Gigantes</option>
+    <option value="Humanoides">Humanoides</option>
+    <option value="Monstruosidades">Monstruosidades</option>
+    <option value="Gosmas (Oozes)">Gosmas (Oozes)</option>
+    <option value="Plantas">Plantas</option>
+    <option value="Mortos-vivos">Mortos-vivos</option>
+  </select>
 
   <label>Vida:</label>
   <input type="number" ng-model="novoInimigo.vida" class="inputAdd">
@@ -81,6 +98,7 @@
   </div>
   <button ng-click="adicionarAtaque()" class="buttonAddSkill">+ Adicionar Ataque</button>
   <br><br>
-  <button ng-click="salvarInimigo()" class="addEntityButton">Salvar Inimigo</button>
+  <button ng-click="salvarInimigo()" class="addEntityButton">{{modoEdicao ? 'Salvar Alteracoes' : 'Salvar Inimigo'}}</button>
+  <button ng-if="modoEdicao" ng-click="cancelarEdicaoInimigo()" class="buttonAddSkill">Cancelar Edicao</button>
 
 </div>

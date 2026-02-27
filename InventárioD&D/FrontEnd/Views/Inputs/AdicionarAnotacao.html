@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div class="container">
+
+  <h1 class="inputTitles">{{modoEdicao ? 'Editar Anotacao' : 'Criar Anotacao'}}</h1>
+
+  <label>Título:</label>
+  <input type="text" ng-model="novaAnotacao.titulo" class="inputAdd">
+
+  <label>Tipo:</label>
+  <select ng-model="novaAnotacao.tipo" class="inputAdd">
+    <option value="" disabled>Selecione um tipo</option>
+    <option value="Lore">Lore</option>
+    <option value="Missao">Missão</option>
+    <option value="Evento">Evento</option>
+    <option value="Lembrete">Lembrete</option>
+    <option value="Improviso">Improviso</option>
+    <option value="Outro">Outro</option>
+  </select>
+
+  <br><br>
+
+  <h2>Informações</h2>
+
+  <textarea ng-model="novaAnotacao.informacoes" placeholder="Ex: na cidade X eles recebem a missao de..." class="inputAdd inputAutoGrow" rows="2" oninput="this.style.height='auto'; this.style.height=this.scrollHeight + 'px';"></textarea>
+  <br><br>
+
+  <br><br>
+  <button ng-click="salvarAnotacao()" class="addEntityButton">{{modoEdicao ? 'Salvar Alteracoes' : 'Salvar Anotação'}}</button>
+  <button ng-if="modoEdicao" ng-click="cancelarEdicaoAnotacao()" class="buttonAddSkill">Cancelar Edicao</button>
+
+</div>

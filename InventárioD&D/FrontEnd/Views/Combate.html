@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
 <div class="combate" ng-controller="CombateCtrl">
 
     <h1 class="inputTitles">Combate</h1>
@@ -67,14 +68,28 @@
     </div>
 
     <hr>
+    <h2>Inimigos</h2>
 
     <div ng-repeat="c in combate.inimigos track by c.instanceId" class="combate-inimigo">
 
-        <h2>{{c.nome}}</h2> 
+        <div class="titles">
+            <h2>{{c.nome}}</h2> <h3>{{ c.numero }}</h3>
+            <button class="enemyActionButton remove" ng-click="removerInimigoCombate(c)">Remover</button>
+        </div> 
 
         <div class="pagesHeader">
-            <label>Vida:</label>
-            <input type="number" ng-model="c.vidaAtual" class="inputCombat">
+            <div class="vida-campo">
+                <label>Vida:</label>
+                <input type="number" ng-model="c.vidaAtual" class="inputCombat">
+                <div class="vida-barra-wrapper">
+                    <div class="vida-barra-fundo">
+                        <div class="vida-barra-preenchimento {{getVidaClasse(c)}}"
+                            ng-style="{'width': getVidaPercentual(c) + '%'}">
+                        </div>
+                    </div>
+                    <small>{{c.vidaAtual || 0}} / {{c.vida || 0}} HP</small>
+                </div>
+            </div>
 
             <label>Iniciativa:</label>
             <input type="number" ng-model="c.iniciativa" ng-model-options="{ getterSetter: false }" class="inputCombat">
@@ -113,7 +128,7 @@
             <tr ng-repeat="t in getTurnos() track by t.instanceId" ng-class="{'turnoAtual': $index === 0}">
                 
                 <td>{{$index + 1}}</td>
-                <td>{{t.nome}}</td>
+                <td>{{t.nome}} {{ t.numero }}</td>
                 <td class="iniciativa">{{t.iniciativa}}</td>
             </tr>
         </tbody>

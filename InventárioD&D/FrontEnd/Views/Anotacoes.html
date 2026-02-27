@@ -1,5 +1,46 @@
-<p>Texto livre
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div>
+    <div class="pagesHeader">
+        <h1 class="font">Anotações</h1>
+        <a href="" ng-click="abrirCriacaoAnotacao()" class="addButton">Adicionar anotação</a>
+    </div>
+    <div class="filtros">
 
-Organização por sessão
+        <input type="text"
+            ng-model="buscaTitulo"
+            placeholder="Buscar Anotação..."
+            class="inputFiltro">
 
-Tags (ex: "importante", "segredo")</p>
+        <select ng-model="buscaTipo" class="selectFiltro">
+            <option value="">Selecione um tipo</option>
+            <option value="Lore">Lore</option>
+            <option value="Missao">Missão</option>
+            <option value="Evento">Evento</option>
+            <option value="Lembrete">Lembrete</option>
+            <option value="Improviso">Improviso</option>
+            <option value="Outro">Outro</option>
+        </select>
+
+    </div>
+
+    <br><br>
+
+    <div class="containerDivs">
+
+        <div ng-repeat="anotacao in anotacoes | filter: {tipo: buscaTipo} | filter: {titulo: buscaTitulo} " class="ficha">
+
+            <div class="title"><h1>{{anotacao.titulo}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;"> {{anotacao.tipo}}</h5>
+            <div class="enemyActions">
+                <button ng-click="editarAnotacao(anotacao)" class="enemyActionButton edit">Editar</button>
+                <button ng-click="removerAnotacao(anotacao)" class="enemyActionButton remove">Remover</button>
+            </div>
+            <hr>
+
+            <h3>Informações</h3>
+            <ul><li>{{anotacao.informacoes}}</li></ul>
+
+        </div>
+    </div>
+
+</div>

@@ -1,15 +1,92 @@
-<p>Deve ter:
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div>
+    <div class="pagesHeader">
+        <h1 class="font">NPCs</h1>
+        <a href="" ng-click="abrirCriacaoNPC()" class="addButton">Adicionar NPC</a>
+    </div>
+    <div class="filtros">
 
-Nome
+        <input type="text"
+            ng-model="buscaNome"
+            placeholder="Buscar NPC..."
+            class="inputFiltro">
 
-Raça / classe
+        <select ng-model="ordenacao" class="selectFiltro">
+            <option value="">Selecione um filtro</option>
+            <option value="nome">Nome (A-Z)</option>
+            <option value="-nome">Nome (Z-A)</option>
+            <option value="raca">Raça (A-Z)</option>
+            <option value="-raca">Raça (Z-A)</option>
+        </select>
 
-Personalidade
+    </div>
 
-Objetivo
+    <br><br>
 
-Relação com jogadores
+    <div class="containerDivs">
 
-Segredos
+        <div ng-repeat="npc in npcs | filter: {nome: buscaNome} | orderBy:ordenacao" class="ficha">
 
-talvez um botao de erar aleatório??</p>
+            <div class="title"><h1>{{npc.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;"> {{npc.raca}}</h5>
+            <button ng-disabled="!combate.ativo" ng-click="adicionarNPCAoCombate(npc)" class="addCombat">
+                Adicionar ao Combate
+            </button>
+            <div class="enemyActions">
+                <button ng-click="editarNPC(npc)" class="enemyActionButton edit">Editar</button>
+                <button ng-click="removerNPC(npc)" class="enemyActionButton remove">Remover</button>
+            </div>
+            <hr>
+
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{npc.vida}}</p>
+                <p><strong>CA:</strong> {{npc.ca}}</p>
+            </div>
+            <hr>
+
+            <div class="atributes">
+                <h4>FOR: {{npc.dados.atributos.forca}} </h4>
+                <h4>DES: {{npc.dados.atributos.destreza}}</h4>
+                <h4>CON: {{npc.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{npc.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{npc.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{npc.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(npc.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(npc.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(npc.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(npc.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(npc.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(npc.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(npc.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(npc.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(npc.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(npc.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(npc.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(npc.dados.atributos.carisma)}})</h4>
+            </div>
+
+            <hr>
+
+            <h3>Informações</h3>
+            <ul><li>{{npc.dados.informacoes}}</li></ul>
+
+            <h3>Habilidades</h3>
+            <ul>
+            <li ng-repeat="h in npc.dados.habilidades">
+                {{h.descricao}}
+            </li>
+            </ul>
+
+            <h3>Resistências</h3>
+            <ul><li>{{npc.dados.resistencias}}</li></ul>
+
+            <h3>Imunidades</h3>
+            <ul><li>{{npc.dados.imunidades}}</li></ul>
+
+            <h3>Ataques</h3>
+            <ul>
+            <li ng-repeat="a in npc.dados.ataques">
+                <strong>{{a.nome}}:</strong> {{a.dano}}
+            </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>

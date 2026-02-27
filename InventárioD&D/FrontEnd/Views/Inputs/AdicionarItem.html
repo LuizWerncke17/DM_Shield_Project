@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+
+<div class="container">
+
+  <h1 class="inputTitles">{{modoEdicao ? 'Editar Item' : 'Criar Item'}}</h1>
+
+  <label>Nome:</label>
+  <input type="text" ng-model="novoItem.nome" class="inputAdd">
+
+  <label>Tipo:</label>
+  <select ng-model="novoItem.tipo" class="inputAdd">
+    <option value="" disabled>Selecione um tipo</option>
+    <option value="Arma">Arma</option>
+    <option value="Armadura">Armadura</option>
+    <option value="Magia">Magia</option>
+    <option value="Escudo">Escudo</option>
+    <option value="Outro">Outro</option>
+  </select>
+
+  <label>Descrição:</label>
+  <textarea ng-model="novoItem.descricao" class="inputAdd inputAutoGrow" rows="2"
+    oninput="this.style.height='auto'; this.style.height=this.scrollHeight + 'px';">
+  </textarea>
+
+  <label>Valor:</label>
+  <input type="text" ng-model="novoItem.valor" class="inputAdd">
+
+  <label>Raridade:</label>
+  <select ng-model="novoItem.raridade" class="inputAdd">
+    <option value="">Selecione</option>
+    <option>Comum</option>
+    <option>Incomum</option>
+    <option>Raro</option>
+    <option>Épico</option>
+    <option>Lendário</option>
+  </select>
+
+  <h2 class="inputSubtitles">Efeito</h2>
+
+  <textarea ng-model="novoItem.efeito" placeholder="Ex: +2 de força, resistência a fogo"
+    class="inputAdd inputAutoGrow" rows="2"
+    oninput="this.style.height='auto'; this.style.height=this.scrollHeight + 'px';">
+  </textarea>
+
+  <br><br>
+
+  <button ng-click="salvarItem()" class="addEntityButton">
+    {{modoEdicao ? 'Salvar Alterações' : 'Salvar Item'}}
+  </button>
+
+  <button ng-if="modoEdicao" ng-click="cancelarEdicaoItem()" class="buttonAddSkill">
+    Cancelar Edição
+  </button>
+
+</div>

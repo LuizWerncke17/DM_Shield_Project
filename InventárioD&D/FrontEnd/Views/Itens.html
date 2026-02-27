@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+
+<div>
+    <div class="pagesHeader">
+        <h1 class="font">Itens</h1>
+        <a href="" ng-click="abrirCriacaoItem()" class="addButton">Adicionar Item</a>
+    </div>
+
+    <div class="filtros">
+
+        <input type="text"
+            ng-model="buscaNome"
+            placeholder="Buscar Item..."
+            class="inputFiltro">
+
+        <select ng-model="buscaTipo" class="selectFiltro">
+            <option value="">Selecione um tipo</option>
+            <option value="Arma">Arma</option>
+            <option value="Armadura">Armadura</option>
+            <option value="Magia">Magia</option>
+            <option value="Escudo">Escudo</option>
+            <option value="Outro">Outro</option>
+        </select>
+
+    </div>
+
+    <br><br>
+
+    <div class="containerDivs">
+
+        <div ng-repeat="item in itens | filter:{nome: buscaNome} | filter:filtroTipoItem" class="ficha">
+
+            <div class="title">
+                <h1>{{item.nome}}</h1>
+            </div>
+
+            <h5 class="enemiesTipe" style="color: darkgrey;">
+                {{item.tipo}}
+            </h5>
+
+            <div class="enemyActions">
+                <button ng-click="editarItem(item)" class="enemyActionButton edit">Editar</button>
+                <button ng-click="removerItem(item)" class="enemyActionButton remove">Remover</button>
+            </div>
+
+            <hr>
+
+            <p><strong>Raridade:</strong> {{item.raridade}}</p>
+            <p><strong>Valor:</strong> {{item.valor}}</p>
+
+            <hr>
+
+            <h3>Descrição</h3>
+            <p>{{item.descricao}}</p>
+
+            <h3>Efeito</h3>
+            <p>{{item.efeito}}</p>
+
+        </div>
+
+    </div>
+</div>

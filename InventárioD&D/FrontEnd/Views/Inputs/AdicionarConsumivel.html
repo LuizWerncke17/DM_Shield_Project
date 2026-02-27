@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+
+<div class="container">
+
+  <h1 class="inputTitles">{{modoEdicao ? 'Editar Consumível' : 'Criar Consumível'}}</h1>
+
+  <label>Nome:</label>
+  <input type="text" ng-model="novoConsumivel.nome" class="inputAdd">
+
+  <label>Tipo:</label>
+  <select ng-model="novoConsumivel.tipo" class="inputAdd">
+    <option value="" disabled>Selecione um tipo</option>
+    <option value="Pocao">Poção</option>
+    <option value="Refeicao">Refeição</option>
+    <option value="Lanche">Lanche</option>
+    <option value="Bebida">Bebida</option>
+    <option value="Outro">Outro</option>
+  </select>
+
+  <label>Descrição:</label>
+  <textarea ng-model="novoConsumivel.descricao" class="inputAdd inputAutoGrow" rows="2"
+    oninput="this.style.height='auto'; this.style.height=this.scrollHeight + 'px';">
+  </textarea>
+
+  <label>Valor:</label>
+  <input type="text" ng-model="novoConsumivel.valor" class="inputAdd">
+
+  <h2 class="inputSubtitles">Efeito</h2>
+
+  <textarea ng-model="novoConsumivel.efeito" placeholder="Ex: Cura 2d4+2"
+    class="inputAdd inputAutoGrow" rows="2"
+    oninput="this.style.height='auto'; this.style.height=this.scrollHeight + 'px';">
+  </textarea>
+
+  <label>Duração:</label>
+  <input type="text" ng-model="novoConsumivel.duracao" placeholder="Ex: 1 minuto, Instantâneo"
+    class="inputAdd">
+
+  <br><br>
+
+  <button ng-click="salvarConsumivel()" class="addEntityButton">
+    {{modoEdicao ? 'Salvar Alterações' : 'Salvar Consumível'}}
+  </button>
+
+  <button ng-if="modoEdicao" ng-click="cancelarEdicaoConsumivel()" class="buttonAddSkill">
+    Cancelar Edição
+  </button>
+
+</div>

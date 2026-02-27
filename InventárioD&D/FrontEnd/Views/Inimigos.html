@@ -1,7 +1,8 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
 <div>
     <div class="pagesHeader">
         <h1 class="font">Inimigos</h1>
-        <a href="#/AdicionarInimigo" class="addButton">Adicionar inimigo</a>
+        <a href="" ng-click="abrirCriacaoInimigo()" class="addButton">Adicionar inimigo</a>
     </div>
     <div class="filtros">
 
@@ -10,7 +11,8 @@
             placeholder="Buscar inimigo..."
             class="inputFiltro">
 
-        <select ng-model="ordenacao" class="selectFiltro">
+        <select ng-model="ordenacao" class="selectFiltro"> 
+            <option value="">Selecione um filtro</option>
             <option value="nome">Nome (A-Z)</option>
             <option value="-nome">Nome (Z-A)</option>
             <option value="dados.nd">ND (Crescente)</option>
@@ -30,6 +32,10 @@
             <button ng-disabled="!combate.ativo" ng-click="adicionarAoCombate(inimigo)" class="addCombat">
                 Adicionar ao Combate
             </button>
+            <div class="enemyActions">
+                <button ng-click="editarInimigo(inimigo)" class="enemyActionButton edit">Editar</button>
+                <button ng-click="removerInimigo(inimigo)" class="enemyActionButton remove">Remover</button>
+            </div>
             <hr>
 
             <div class="EnemiesInfo1">
