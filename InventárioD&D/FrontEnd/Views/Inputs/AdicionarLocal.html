@@ -1,0 +1,385 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div ng-controller="LocaisCtrl" class="container">
+    <h1 class="inputTitles">Adicionar / Editar Local</h1>
+
+    <label>Nome do local</label>
+    <input type="text" ng-model="getLocal().nome" class="inputAdd" placeholder="Ex: Caverna do Urso">
+
+    <label>Tipo</label>
+    <select ng-model="getLocal().tipo" class="inputAdd">
+        <option value="" disabled>Selecione um tipo</option>
+        <option value="Reino">Reino</option>
+        <option value="Natural">Natural</option>
+        <option value="Clareira">Clareira</option>
+        <option value="Masmorra">Masmorra</option>
+        <option value="Vilarejo">Vilarejo</option>
+        <option value="Outro">Outro</option>
+    </select>
+
+    <label>Descrição</label>
+    <textarea ng-model="getLocal().descricao" class="inputAdd inputAutoGrow" placeholder="Descreva o local em detalhes"></textarea>
+
+    <button class="addEntityButton" ng-click="salvarLocal()">Salvar Local</button>
+
+    <hr />
+    <h2 class="inputSubtitles">Adicionar NPC</h2>
+    <input type="text" ng-model="npcNome" ng-change="selecionarNpcPorNome()" list="npc-list" placeholder="Nome do NPC" class="inputAdd" style="width:240px; display:inline-block;">
+    <datalist id="npc-list">
+        <option ng-repeat="n in availableNpcs | filter:npcNome" value="{{n.nome}}">
+    </datalist>
+    <button class="buttonAddSkill" ng-click="addNpcByName()">Adicionar NPC</button>
+
+    <div ng-if="npcFichaSelecionada" style="margin-top:12px;">
+        <h4>Ficha selecionada (NPC)</h4>
+        <div class="ficha">
+            <div class="title"><h1>{{npcFichaSelecionada.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{npcFichaSelecionada.raca || npcFichaSelecionada.tipo}}</h5>
+            <button ng-disabled="!combate.ativo" ng-click="adicionarAoCombate(npcFichaSelecionada)" class="addCombat">
+                Adicionar ao Combate
+            </button>
+            <hr>
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{npcFichaSelecionada.vida}}</p>
+                <p><strong>CA:</strong> {{npcFichaSelecionada.ca}}</p>
+            </div>
+            <hr>
+            <div class="atributes">
+                <h4>FOR: {{npcFichaSelecionada.dados.atributos.forca}}</h4>
+                <h4>DES: {{npcFichaSelecionada.dados.atributos.destreza}}</h4>
+                <h4>CON: {{npcFichaSelecionada.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{npcFichaSelecionada.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{npcFichaSelecionada.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{npcFichaSelecionada.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(npcFichaSelecionada.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(npcFichaSelecionada.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(npcFichaSelecionada.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(npcFichaSelecionada.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(npcFichaSelecionada.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(npcFichaSelecionada.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(npcFichaSelecionada.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(npcFichaSelecionada.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(npcFichaSelecionada.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(npcFichaSelecionada.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(npcFichaSelecionada.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(npcFichaSelecionada.dados.atributos.carisma)}})</h4>
+            </div>
+            <hr>
+            <h3>Habilidades</h3>
+            <ul>
+                <li ng-repeat="h in npcFichaSelecionada.dados.habilidades">{{h.descricao}}</li>
+            </ul>
+            <h3>Resistencias</h3>
+            <ul><li>{{npcFichaSelecionada.dados.resistencias}}</li></ul>
+            <h3>Imunidades</h3>
+            <ul><li>{{npcFichaSelecionada.dados.imunidades}}</li></ul>
+            <h3>Ataques</h3>
+            <ul>
+                <li ng-repeat="a in npcFichaSelecionada.dados.ataques">
+                    <strong>{{a.nome}}:</strong> {{a.dano}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="inputSubtitles">Adicionar Inimigo</h2>
+    <input type="text" ng-model="inimigoNome" ng-change="selecionarInimigoPorNome()" list="inimigo-list" placeholder="Nome do inimigo" class="inputAdd" style="width:260px; display:inline-block;">
+    <datalist id="inimigo-list">
+        <option ng-repeat="i in availableInimigos | filter:inimigoNome" value="{{i.nome}}">
+    </datalist>
+    <button class="buttonAddSkill" ng-click="addInimigoByName()">Adicionar Inimigo</button>
+
+    <div ng-if="inimigoFichaSelecionada" style="margin-top:12px;">
+        <h4>Ficha selecionada</h4>
+        <div class="ficha">
+            <div class="title"><h1>{{inimigoFichaSelecionada.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{inimigoFichaSelecionada.tipo}}</h5>
+            <hr>
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{inimigoFichaSelecionada.vida}}</p>
+                <p><strong>CA:</strong> {{inimigoFichaSelecionada.ca}}</p>
+                <p><strong>ND:</strong> {{inimigoFichaSelecionada.dados.nd}} ({{inimigoFichaSelecionada.dados.xp}} XP)</p>
+            </div>
+            <hr>
+            <div class="atributes">
+                <h4>FOR: {{inimigoFichaSelecionada.dados.atributos.forca}}</h4>
+                <h4>DES: {{inimigoFichaSelecionada.dados.atributos.destreza}}</h4>
+                <h4>CON: {{inimigoFichaSelecionada.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{inimigoFichaSelecionada.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{inimigoFichaSelecionada.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{inimigoFichaSelecionada.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(inimigoFichaSelecionada.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(inimigoFichaSelecionada.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(inimigoFichaSelecionada.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(inimigoFichaSelecionada.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(inimigoFichaSelecionada.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(inimigoFichaSelecionada.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(inimigoFichaSelecionada.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(inimigoFichaSelecionada.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(inimigoFichaSelecionada.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(inimigoFichaSelecionada.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(inimigoFichaSelecionada.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(inimigoFichaSelecionada.dados.atributos.carisma)}})</h4>
+            </div>
+            <hr>
+            <h3>Habilidades</h3>
+            <ul>
+                <li ng-repeat="h in inimigoFichaSelecionada.dados.habilidades">{{h.descricao}}</li>
+            </ul>
+            <h3>Resistencias</h3>
+            <ul><li>{{inimigoFichaSelecionada.dados.resistencias}}</li></ul>
+            <h3>Imunidades</h3>
+            <ul><li>{{inimigoFichaSelecionada.dados.imunidades}}</li></ul>
+            <h3>Ataques</h3>
+            <ul>
+                <li ng-repeat="a in inimigoFichaSelecionada.dados.ataques">
+                    <strong>{{a.nome}}:</strong> {{a.dano}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="inputSubtitles">Adicionar Item</h2>
+    <input type="text" ng-model="itemNome" ng-change="selecionarItemPorNome()" list="item-list" placeholder="Nome do item" class="inputAdd" style="width:240px; display:inline-block;">
+    <datalist id="item-list">
+        <option ng-repeat="it in availableItens | filter:itemNome" value="{{it.nome}}">
+    </datalist>
+    <button class="buttonAddSkill" ng-click="addItemByName()">Adicionar Item</button>
+
+    <div ng-if="itemFichaSelecionada" style="margin-top:12px;">
+        <h4>Ficha selecionada</h4>
+        <div class="ficha">
+            <div class="title"><h1>{{itemFichaSelecionada.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{itemFichaSelecionada.tipo}}</h5>
+            <hr>
+            <p><strong>Raridade:</strong> {{itemFichaSelecionada.raridade}}</p>
+            <p><strong>Valor:</strong> {{itemFichaSelecionada.valor}}</p>
+            <hr>
+            <h3>Descrição</h3>
+            <p>{{itemFichaSelecionada.descricao}}</p>
+            <h3>Efeito</h3>
+            <p>{{itemFichaSelecionada.efeito}}</p>
+        </div>
+    </div>
+
+    <h2 class="inputSubtitles">Adicionar Consumível</h2>
+    <input type="text" ng-model="consumivelNome" ng-change="selecionarConsumivelPorNome()" list="consumivel-list" placeholder="Nome do consumível" class="inputAdd" style="width:260px; display:inline-block;">
+    <datalist id="consumivel-list">
+        <option ng-repeat="c in availableConsumiveis | filter:consumivelNome" value="{{c.nome}}">
+    </datalist>
+    <button class="buttonAddSkill" ng-click="addConsumivelByName()">Adicionar Consumível</button>
+
+    <div ng-if="consumivelFichaSelecionada" style="margin-top:12px;">
+        <h4>Ficha selecionada</h4>
+        <div class="ficha">
+            <div class="title"><h1>{{consumivelFichaSelecionada.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{consumivelFichaSelecionada.tipo}}</h5>
+            <hr>
+            <p><strong>Duração:</strong> {{consumivelFichaSelecionada.duracao}}</p>
+            <p><strong>Valor:</strong> {{consumivelFichaSelecionada.valor}}</p>
+            <hr>
+            <h3>Descrição</h3>
+            <p>{{consumivelFichaSelecionada.descricao}}</p>
+            <h3>Efeito</h3>
+            <p>{{consumivelFichaSelecionada.efeito}}</p>
+        </div>
+    </div>
+
+    <h2 class="inputSubtitles">Adicionar Anotação</h2>
+    <input type="text" ng-model="anotacaoTitulo" ng-change="selecionarAnotacaoPorTitulo()" list="anotacao-list" placeholder="Título da anotação" class="inputAdd" style="width:260px; display:inline-block;">
+    <datalist id="anotacao-list">
+        <option ng-repeat="a in availableAnotacoes | filter:anotacaoTitulo" value="{{a.titulo}}">
+    </datalist>
+    <button class="buttonAddSkill" ng-click="addAnotacaoByTitulo()">Adicionar Anotação</button>
+
+    <div ng-if="anotacaoFichaSelecionada" style="margin-top:12px;">
+        <h4>Ficha selecionada</h4>
+        <div class="ficha">
+            <div class="title"><h1>{{anotacaoFichaSelecionada.titulo}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{anotacaoFichaSelecionada.tipo}}</h5>
+            <hr>
+            <h3>Informacoes</h3>
+            <p>{{anotacaoFichaSelecionada.informacoes}}</p>
+        </div>
+    </div>
+
+    <hr />
+    <h2 class="inputSubtitles">Conteúdo atual</h2>
+    <h3 class="inputSubtitles">NPCs</h3>
+    <ul>
+        <li ng-repeat="n in getLocal().dados.npcs track by n.instanceId">
+            {{n.nome}} {{n.numero ? (n.numero) : ''}}
+            <button class="addEntityButton" style="display:inline-block; width:auto; padding:5px 10px; font-size:90%; margin-left:10px;" ng-click="removerNpcLocal(n)">Remover</button>
+        </li>
+    </ul>
+
+    <h3 class="inputSubtitles">Inimigos no local</h3>
+    <ul>
+        <li ng-repeat="i in getLocal().dados.inimigos track by i.instanceId">
+            {{i.nome}} {{i.numero ? ('#' + i.numero) : ''}}
+            <button class="addEntityButton" style="display:inline-block; width:auto; padding:5px 10px; font-size:90%; margin-left:10px;" ng-click="removerInimigoLocal(i)">Remover</button>
+        </li>
+    </ul>
+
+    <h3 class="inputSubtitles">Itens</h3>
+    <ul>
+        <li ng-repeat="i in getLocal().dados.itens track by i.instanceId">
+            {{i.nome}} {{i.numero}}
+            <button class="addEntityButton" style="display:inline-block; width:auto; padding:5px 10px; font-size:90%; margin-left:10px;" ng-click="removerItemLocal(i)">Remover</button>
+        </li>
+    </ul>
+
+    <h3 class="inputSubtitles">Consumíveis</h3>
+    <ul>
+        <li ng-repeat="i in getLocal().dados.consumiveis track by i.instanceId">
+            {{i.nome}} {{i.numero}}
+            <button class="addEntityButton" style="display:inline-block; width:auto; padding:5px 10px; font-size:90%; margin-left:10px;" ng-click="removerConsumivelLocal(i)">Remover</button>
+        </li>
+    </ul>
+
+    <h3 class="inputSubtitles">Anotações</h3>
+    <ul>
+        <li ng-repeat="a in getLocal().dados.anotacoes track by a.instanceId">
+            {{a.titulo}} {{a.numero ? ('#' + a.numero) : ''}}
+            <button class="addEntityButton" style="display:inline-block; width:auto; padding:5px 10px; font-size:90%; margin-left:10px;" ng-click="removerAnotacaoLocal(a)">Remover</button>
+        </li>
+    </ul>
+
+    <hr />
+    <h2 class="inputSubtitles">Fichas dos inimigos no local</h2>
+    <div class="containerDivs">
+        <div ng-repeat="ficha in getFichasUnicasLocal()" class="ficha">
+            <div class="title"><h1>{{ficha.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;"> {{ficha.tipo}}</h5>
+            <button ng-disabled="!combate.ativo" ng-click="adicionarAoCombate(ficha)" class="addCombat">
+                Adicionar ao Combate
+            </button>
+            <hr>
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{ficha.vida}}</p>
+                <p><strong>CA:</strong> {{ficha.ca}}</p>
+                <p><strong>ND:</strong> {{ficha.dados.nd}}  ({{ficha.dados.xp}} XP)</p>
+            </div>
+            <hr>
+            <div class="atributes">
+                <h4>FOR: {{ficha.dados.atributos.forca}}</h4>
+                <h4>DES: {{ficha.dados.atributos.destreza}}</h4>
+                <h4>CON: {{ficha.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{ficha.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{ficha.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{ficha.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(ficha.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.carisma)}})</h4>
+            </div>
+            <hr>
+            <h3>Habilidades</h3>
+            <ul>
+                <li ng-repeat="h in ficha.dados.habilidades">{{h.descricao}}</li>
+            </ul>
+            <h3>Resistencias</h3>
+            <ul><li>{{ficha.dados.resistencias}}</li></ul>
+            <h3>Imunidades</h3>
+            <ul><li>{{ficha.dados.imunidades}}</li></ul>
+            <h3>Ataques</h3>
+            <ul>
+                <li ng-repeat="a in ficha.dados.ataques">
+                    <strong>{{a.nome}}:</strong> {{a.dano}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr />
+    <h2 class="inputSubtitles">Fichas dos NPCs no local</h2>
+    <div class="containerDivs">
+        <div ng-repeat="ficha in getFichasUnicasNpcsLocal()" class="ficha">
+            <div class="title"><h1>{{ficha.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{ficha.raca || ficha.tipo}}</h5>
+            <button ng-disabled="!combate.ativo" ng-click="adicionarAoCombate(ficha)" class="addCombat">
+                Adicionar ao Combate
+            </button>
+            <hr>
+            <div class="EnemiesInfo1">
+                <p><strong>Vida:</strong> {{ficha.vida}}</p>
+                <p><strong>CA:</strong> {{ficha.ca}}</p>
+            </div>
+            <hr>
+            <div class="atributes">
+                <h4>FOR: {{ficha.dados.atributos.forca}}</h4>
+                <h4>DES: {{ficha.dados.atributos.destreza}}</h4>
+                <h4>CON: {{ficha.dados.atributos.constituicao}}</h4>
+                <h4>INT: {{ficha.dados.atributos.inteligencia}}</h4>
+                <h4>SAB: {{ficha.dados.atributos.sabedoria}}</h4>
+                <h4>CAR: {{ficha.dados.atributos.carisma}}</h4>
+            </div>
+            <div class="atributes">
+                <h4>({{calcularMod(ficha.dados.atributos.forca) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.forca)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.destreza) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.destreza)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.constituicao) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.constituicao)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.inteligencia) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.inteligencia)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.sabedoria) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.sabedoria)}})</h4>
+                <h4>({{calcularMod(ficha.dados.atributos.carisma) >= 0 ? '+' : ''}}{{calcularMod(ficha.dados.atributos.carisma)}})</h4>
+            </div>
+            <hr>
+            <h3>Habilidades</h3>
+            <ul>
+                <li ng-repeat="h in ficha.dados.habilidades">{{h.descricao}}</li>
+            </ul>
+            <h3>Resistencias</h3>
+            <ul><li>{{ficha.dados.resistencias}}</li></ul>
+            <h3>Imunidades</h3>
+            <ul><li>{{ficha.dados.imunidades}}</li></ul>
+            <h3>Ataques</h3>
+            <ul>
+                <li ng-repeat="a in ficha.dados.ataques">
+                    <strong>{{a.nome}}:</strong> {{a.dano}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr />
+    <h2 class="inputSubtitles">Fichas dos itens no local</h2>
+    <div class="containerDivs">
+        <div ng-repeat="ficha in getFichasUnicasItensLocal()" class="ficha">
+            <div class="title"><h1>{{ficha.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{ficha.tipo || ficha.raridade}}</h5>
+            <hr>
+            <p><strong>Raridade:</strong> {{ficha.raridade}}</p>
+            <p><strong>Valor:</strong> {{ficha.valor}}</p>
+            <hr>
+            <h3>Descrição</h3>
+            <p>{{ficha.descricao}}</p>
+            <h3>Efeito</h3>
+            <p>{{ficha.efeito}}</p>
+        </div>
+    </div>
+
+    <hr />
+    <h2 class="inputSubtitles">Fichas dos consumíveis no local</h2>
+    <div class="containerDivs">
+        <div ng-repeat="ficha in getFichasUnicasConsumiveisLocal()" class="ficha">
+            <div class="title"><h1>{{ficha.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{ficha.tipo}}</h5>
+            <hr>
+            <p><strong>Duração:</strong> {{ficha.duracao}}</p>
+            <p><strong>Valor:</strong> {{ficha.valor}}</p>
+            <hr>
+            <h3>Descrição</h3>
+            <p>{{ficha.descricao}}</p>
+            <h3>Efeito</h3>
+            <p>{{ficha.efeito}}</p>
+        </div>
+    </div>
+
+    <hr />
+    <h2 class="inputSubtitles">Fichas das anotações no local</h2>
+    <div class="containerDivs">
+        <div ng-repeat="ficha in getFichasUnicasAnotacoesLocal()" class="ficha">
+            <div class="title"><h1>{{ficha.titulo}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{ficha.tipo}}</h5>
+            <hr>
+            <h3>Informacoes</h3>
+            <p>{{ficha.informacoes}}</p>
+        </div>
+    </div>
+
+    <hr />
+</div>

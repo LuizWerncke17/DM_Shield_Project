@@ -13,6 +13,11 @@
     src: url(/FrontEnd/CSS/Fontes/DragonHunter.otf);
 }
 
+@font-face {
+    font-family: "TitulosNumeros";
+    src: url(/FrontEnd/CSS/Fontes/Numbers.ttf);
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -173,3 +178,9 @@ input:focus {
     align-items: center;
     justify-content: center;
 }
+
+.texto-formatado {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+

@@ -20,6 +20,18 @@ db.connect(err => {
     console.log("Erro ao conectar:", err);
   } else {
     console.log("Conectado ao MySQL!");
+    db.query(`
+      CREATE TABLE IF NOT EXISTS sessoes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(255) DEFAULT NULL,
+        descricao TEXT DEFAULT NULL,
+        dados LONGTEXT DEFAULT NULL
+      )
+    `, (tableErr) => {
+      if (tableErr) {
+        console.log("Erro ao garantir tabela sessoes:", tableErr);
+      }
+    });
   }
 });
 
@@ -456,6 +468,178 @@ app.delete('/consumiveis/:id', (req, res) => {
     }
 
     res.send({ message: 'Consumivel removido!' });
+  });
+});
+
+//-----------------------------------------------------LOCAIS------------------------------------------------------
+
+app.get('/locais', (req, res) => {
+  db.query('SELECT * FROM locais', (err, results) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    const locais = results.map(local => ({
+      ...local,
+      dados: local.dados ? JSON.parse(local.dados) : {}
+    }));
+
+    res.send(locais);
+  });
+});
+
+app.get('/locais/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('SELECT * FROM locais WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send({ message: 'Local nao encontrado.' });
+    }
+
+    const local = results[0];
+    local.dados = local.dados ? JSON.parse(local.dados) : {};
+    res.send(local);
+  });
+});
+
+app.post('/locais', (req, res) => {
+  const { nome, tipo, descricao, dados } = req.body;
+
+  const sql = 'INSERT INTO locais (nome, tipo, descricao, dados) VALUES (?, ?, ?, ?)';
+
+  db.query(sql, [nome, tipo, descricao, JSON.stringify(dados || {})], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    res.send({ message: 'Local criado!', id: result.insertId });
+  });
+});
+
+app.put('/locais/:id', (req, res) => {
+  const { id } = req.params;
+  const { nome, tipo, descricao, dados } = req.body;
+
+  const sql = 'UPDATE locais SET nome = ?, tipo = ?, descricao = ?, dados = ? WHERE id = ?';
+
+  db.query(sql, [nome, tipo, descricao, JSON.stringify(dados || {}), id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send({ message: 'Local nao encontrado.' });
+    }
+
+    res.send({ message: 'Local atualizado!', id: Number(id) });
+  });
+});
+
+app.delete('/locais/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('DELETE FROM locais WHERE id = ?', [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send({ message: 'Local nao encontrado.' });
+    }
+
+    res.send({ message: 'Local removido!' });
+  });
+});
+
+//-----------------------------------------------------SESSOES------------------------------------------------------
+
+app.get('/sessoes', (req, res) => {
+  db.query('SELECT * FROM sessoes', (err, results) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    const sessoes = results.map(sessao => ({
+      ...sessao,
+      dados: sessao.dados ? JSON.parse(sessao.dados) : { locais: [] }
+    }));
+
+    res.send(sessoes);
+  });
+});
+
+app.get('/sessoes/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('SELECT * FROM sessoes WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send({ message: 'Sessao nao encontrada.' });
+    }
+
+    const sessao = results[0];
+    sessao.dados = sessao.dados ? JSON.parse(sessao.dados) : { locais: [] };
+    res.send(sessao);
+  });
+});
+
+app.post('/sessoes', (req, res) => {
+  const { nome, descricao, dados } = req.body;
+  const sql = 'INSERT INTO sessoes (nome, descricao, dados) VALUES (?, ?, ?)';
+
+  db.query(sql, [nome, descricao, JSON.stringify(dados || { locais: [] })], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    res.send({ message: 'Sessao criada!', id: result.insertId });
+  });
+});
+
+app.put('/sessoes/:id', (req, res) => {
+  const { id } = req.params;
+  const { nome, descricao, dados } = req.body;
+  const sql = 'UPDATE sessoes SET nome = ?, descricao = ?, dados = ? WHERE id = ?';
+
+  db.query(sql, [nome, descricao, JSON.stringify(dados || { locais: [] }), id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send({ message: 'Sessao nao encontrada.' });
+    }
+
+    res.send({ message: 'Sessao atualizada!', id: Number(id) });
+  });
+});
+
+app.delete('/sessoes/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('DELETE FROM sessoes WHERE id = ?', [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send({ message: 'Sessao nao encontrada.' });
+    }
+
+    res.send({ message: 'Sessao removida!' });
   });
 });
 

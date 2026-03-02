@@ -1,8 +1,51 @@
-<p>Deve permitir:
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div ng-controller="SessaoCtrl">
+    <div class="pagesHeader">
+        <h1 class="font">Criador de Sessoes</h1>
+        <a href="#/AdicionarSessao" class="addButton" ng-click="novaSessao()">Adicionar sessao</a>
+    </div>
 
-✔ Adicionar NPCs
-✔ Adicionar inimigos
-✔ Adicionar locais
-✔ Adicionar notas
+    <div class="containerDivs" ng-if="sessoes.length">
+        <div ng-repeat="s in sessoes track by s.id" class="ficha" style="width:90%; margin:20px auto;">
+            <div class="title2"><h1>{{s.nome || 'Sessao sem nome'}}</h1></div>
+            <p><strong>Descricao:</strong> {{s.descricao || 'Sem descricao'}}</p>
 
-👉 Tudo puxado do banco</p>
+            <details>
+                <summary><strong>Locais da sessao:</strong> {{(s.dados.locais || []).length}}</summary>
+                <div ng-repeat="l in (s.dados.locais || []) track by l.instanceId" style="margin-bottom:10px;">
+                    <details>
+                        <summary>
+                            <strong>{{(l.infoBasica && l.infoBasica.nome) || l.nome}}</strong>
+                            - {{(l.infoBasica && l.infoBasica.tipo) || l.tipo || 'Sem tipo'}}
+                            | NPCs {{(l.dados.npcs || []).length}}
+                            | Inimigos {{(l.dados.inimigos || []).length}}
+                            | Itens {{(l.dados.itens || []).length}}
+                        </summary>
+                        <p>{{(l.infoBasica && l.infoBasica.descricao) || l.descricao || 'Sem descricao'}}</p>
+                        <button class="enemyActionButton edit" ng-click="abrirLocal(l)">Abrir local</button>
+
+                        <h4>NPCs</h4>
+                        <ul><li ng-repeat="n in (l.dados.npcs || []) track by $index">{{n.nome || 'Sem nome'}}</li></ul>
+
+                        <h4>Inimigos</h4>
+                        <ul><li ng-repeat="i in (l.dados.inimigos || []) track by $index">{{i.nome || 'Sem nome'}}</li></ul>
+
+                        <h4>Itens</h4>
+                        <ul><li ng-repeat="it in (l.dados.itens || []) track by $index">{{it.nome || 'Sem nome'}}</li></ul>
+
+                        <h4>Consumiveis</h4>
+                        <ul><li ng-repeat="c in (l.dados.consumiveis || []) track by $index">{{c.nome || 'Sem nome'}}</li></ul>
+
+                        <h4>Anotacoes</h4>
+                        <ul><li ng-repeat="a in (l.dados.anotacoes || []) track by $index">{{a.titulo || 'Sem titulo'}}</li></ul>
+                    </details>
+                </div>
+            </details>
+
+            <div class="enemyActions">
+                <button ng-click="editarSessao(s)" class="enemyActionButton edit">Editar</button>
+                <button ng-click="removerSessao(s)" class="enemyActionButton remove">Remover</button>
+            </div>
+        </div>
+    </div>
+</div>

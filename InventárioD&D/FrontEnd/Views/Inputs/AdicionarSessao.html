@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div ng-controller="SessaoCtrl" class="container">
+    <h1 class="inputTitles">Adicionar / Editar Sessão</h1>
+
+    <label>Nome da sessão</label>
+    <input type="text" ng-model="getSessao().nome" class="inputAdd" placeholder="Ex: Sessao 12 - Templo Esquecido">
+
+    <label>Descrição</label>
+    <textarea ng-model="getSessao().descricao" class="inputAdd inputAutoGrow" placeholder="Resumo rapido da sessao"></textarea>
+
+    <button class="addEntityButton" ng-click="salvarSessao()">Salvar Sessão</button>
+
+    <hr />
+    <h2 class="inputSubtitles">Adicionar Local</h2>
+    <input type="text" ng-model="localNome" ng-change="selecionarLocalPorNome()" list="local-list" placeholder="Nome do local" class="inputAdd" style="width:280px; display:inline-block">
+    <datalist id="local-list">
+        <option ng-repeat="l in availableLocais | filter:localNome" value="{{l.nome}}">
+    </datalist>
+    <button class="buttonAddSkill" ng-click="adicionarLocalByName()">Adicionar Local</button>
+
+    <div ng-if="localSelecionadoPreview" style="margin-top:12px;">
+        <h4 class="inputSubtitles">Local selecionado</h4>
+        <div class="ficha">
+            <div class="title"><h1>{{localSelecionadoPreview.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{localSelecionadoPreview.tipo || 'Sem tipo'}}</h5>
+            <p><strong>Descrição:</strong> {{localSelecionadoPreview.descricao || 'Sem descricao'}}</p>
+            <p><strong>Conteúdo:</strong>
+                NPCs {{(localSelecionadoPreview.dados.npcs || []).length}} |
+                Inimigos {{(localSelecionadoPreview.dados.inimigos || []).length}} |
+                Itens {{(localSelecionadoPreview.dados.itens || []).length}}
+            </p>
+        </div>
+    </div>
+
+    <hr />
+    <h2 class="inputSubtitles">Locais na sessão</h2>
+    <div class="containerDivs">
+        <div ng-repeat="l in getSessao().dados.locais track by l.instanceId" class="ficha">
+            <div class="title"><h1>{{l.infoBasica.nome}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{l.infoBasica.tipo}}</h5>
+            <p><strong>Descrição:</strong> {{l.infoBasica.descricao}}</p>
+            <details>
+                <summary>Exibir informações</summary>
+                <p><strong>NPCs:</strong> {{(l.dados.npcs || []).length}}</p>
+                <p><strong>Inimigos:</strong> {{(l.dados.inimigos || []).length}}</p>
+                <p><strong>Itens:</strong> {{(l.dados.itens || []).length}}</p>
+                <p><strong>Consumíveis:</strong> {{(l.dados.consumiveis || []).length}}</p>
+                <p><strong>Anotações:</strong> {{(l.dados.anotacoes || []).length}}</p>
+            </details>
+        </div>
+    </div>
+</div>

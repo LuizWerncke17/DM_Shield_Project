@@ -1,4 +1,4 @@
-angular.module('DMShield', ['ngRoute'])
+angular.module('DMShield', ['ngRoute','ui.select','ngSanitize'])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $locationProvider.hashPrefix('');
   
@@ -11,7 +11,7 @@ angular.module('DMShield', ['ngRoute'])
   .when('/Itens', { templateUrl: 'Views/Itens.html', controller: 'RecursosCtrl' })
   .when('/Mundo', { templateUrl: 'Views/Mundo.html', controller: 'LocaisCtrl' })
   .when('/Anotacoes', { templateUrl: 'Views/Anotacoes.html', controller: 'AnotacoesCtrl' })
-  .when('/Criador', { templateUrl: 'Views/Criador.html' })
+  .when('/Criador', { templateUrl: 'Views/Criador.html', controller: 'SessaoCtrl' })
   .when('/combate', {templateUrl: 'Views/Combate.html',controller: 'CombateCtrl'})
 
 
@@ -21,6 +21,7 @@ angular.module('DMShield', ['ngRoute'])
   .when('/AdicionarItem', { templateUrl: 'Views/Inputs/AdicionarItem.html', controller: 'RecursosCtrl' })
   .when('/AdicionarConsumivel', { templateUrl: 'Views/Inputs/AdicionarConsumivel.html', controller: 'RecursosCtrl' })
   .when('/AdicionarLocal', { templateUrl: 'Views/Inputs/AdicionarLocal.html', controller: 'LocaisCtrl' })
+  .when('/AdicionarSessao', { templateUrl: 'Views/Inputs/AdicionarSessao.html', controller: 'SessaoCtrl' })
 
   .otherwise({ redirectTo: '/' });
 }])

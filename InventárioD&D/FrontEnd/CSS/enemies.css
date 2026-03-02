@@ -15,6 +15,17 @@
     text-shadow: 0 0 5px #850101;
 }
 
+.title2 {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    justify-content: center;
+    font-family: "TitulosNumeros";
+    font-size: 150%;
+    color: #f5c542;
+    text-shadow: 0 0 5px #850101;
+}
+
 .pagesHeader {
     display: flex;
     justify-content: space-evenly;
@@ -172,7 +183,8 @@ button:hover {
     margin: 30px auto;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #3b0f26;
+    box-shadow: 0 0 16px rgba(90, 15, 139, 0.35);
 }
 
 .inputCombat {

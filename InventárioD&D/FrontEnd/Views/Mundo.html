@@ -1,11 +1,32 @@
-<p>Deve ter:
+<link rel="stylesheet" href="/FrontEnd/CSS/enemies.css">
+<div ng-controller="LocaisCtrl">
+    <div class="pagesHeader">
+        <h1 class="font">Mundo</h1>
+        <a href="#/AdicionarLocal" class="addButton" ng-click="novoLocal()">Adicionar local</a>
+    </div>
 
-Nome do local
+    <div class="filtros">
+        <input type="text" ng-model="buscaNome" placeholder="Buscar local..." class="inputFiltro">
+        <select ng-model="buscaTipo" class="selectFiltro">
+            <option value="">Selecione um tipo</option>
+            <option value="Reino">Reino</option>
+            <option value="Natural">Natural</option>
+            <option value="Clareira">Clareira</option>
+            <option value="Masmorra">Masmorra</option>
+            <option value="Vilarejo">Vilarejo</option>
+            <option value="Outro">Outro</option>
+        </select>
+    </div>
 
-Descrição
-
-NPCs presentes
-
-Eventos importantes
-
-Segredos</p>
+    <div class="containerDivs" ng-if="locaisSalvos.length">
+        <div ng-repeat="l in locaisSalvos | filter:{nome:buscaNome} | filter:{tipo:buscaTipo} track by l.id" class="ficha">
+            <div class="title"><h1>{{l.nome || 'Sem nome'}}</h1></div>
+            <h5 class="enemiesTipe" style="color: darkgrey;">{{l.tipo || 'Sem tipo'}}</h5>
+            <div class="enemyActions">
+                <button ng-click="editarLocal(l)" class="enemyActionButton edit">Exibir</button>
+                <button ng-click="removerLocal(l)" class="enemyActionButton remove">Remover</button>
+            </div>
+            <p>{{l.descricao}}</p>
+        </div>
+    </div>
+</div>
