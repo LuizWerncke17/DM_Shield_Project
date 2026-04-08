@@ -647,3 +647,9 @@ app.delete('/sessoes/:id', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+// Para acessar o site precisa seguir esses passos:
+// Abrir o terminal e digitar cd BackEnd
+// npm install (se der erro ta tudo certo)
+// E por fim: node servidor.js
+// Daí é só usar o Go live ali no canto direito, a extensão
