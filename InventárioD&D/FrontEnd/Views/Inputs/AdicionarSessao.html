@@ -23,7 +23,7 @@
         <div class="ficha">
             <div class="title"><h1>{{localSelecionadoPreview.nome}}</h1></div>
             <h5 class="enemiesTipe" style="color: darkgrey;">{{localSelecionadoPreview.tipo || 'Sem tipo'}}</h5>
-            <p><strong>Descrição:</strong> {{localSelecionadoPreview.descricao || 'Sem descricao'}}</p>
+            <p class="texto-formatado"><strong>Descrição:</strong> {{localSelecionadoPreview.descricao || 'Sem descricao'}}</p>
             <p><strong>Conteúdo:</strong>
                 NPCs {{(localSelecionadoPreview.dados.npcs || []).length}} |
                 Inimigos {{(localSelecionadoPreview.dados.inimigos || []).length}} |
@@ -38,7 +38,7 @@
         <div ng-repeat="l in getSessao().dados.locais track by l.instanceId" class="ficha">
             <div class="title"><h1>{{l.infoBasica.nome}}</h1></div>
             <h5 class="enemiesTipe" style="color: darkgrey;">{{l.infoBasica.tipo}}</h5>
-            <p><strong>Descrição:</strong> {{l.infoBasica.descricao}}</p>
+            <p class="texto-formatado"><strong>Descrição:</strong> {{l.infoBasica.descricao}}</p>
             <details>
                 <summary>Exibir informações</summary>
                 <p><strong>NPCs:</strong> {{(l.dados.npcs || []).length}}</p>

@@ -9,6 +9,10 @@ angular.module('DMShield').controller('DMShieldCtrl', function($scope, $location
       $location.path('/combate');
   };
 
+  $scope.irParaLivroReceitas = function() {
+      $location.path('/LivroReceitas');
+  };
+
   $scope.combate = CombateService.getCombate();
 
   $scope.adicionarAoCombate = function(inimigo) {

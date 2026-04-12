@@ -8,7 +8,7 @@
     <div class="containerDivs" ng-if="sessoes.length">
         <div ng-repeat="s in sessoes track by s.id" class="ficha" style="width:90%; margin:20px auto;">
             <div class="title2"><h1>{{s.nome || 'Sessao sem nome'}}</h1></div>
-            <p><strong>Descricao:</strong> {{s.descricao || 'Sem descricao'}}</p>
+            <p class="texto-formatado"><strong>Descricao:</strong> {{s.descricao || 'Sem descricao'}}</p>
 
             <details>
                 <summary><strong>Locais da sessao:</strong> {{(s.dados.locais || []).length}}</summary>
@@ -21,7 +21,7 @@
                             | Inimigos {{(l.dados.inimigos || []).length}}
                             | Itens {{(l.dados.itens || []).length}}
                         </summary>
-                        <p>{{(l.infoBasica && l.infoBasica.descricao) || l.descricao || 'Sem descricao'}}</p>
+                        <p class="texto-formatado">{{(l.infoBasica && l.infoBasica.descricao) || l.descricao || 'Sem descricao'}}</p>
                         <button class="enemyActionButton edit" ng-click="abrirLocal(l)">Abrir local</button>
 
                         <h4>NPCs</h4>

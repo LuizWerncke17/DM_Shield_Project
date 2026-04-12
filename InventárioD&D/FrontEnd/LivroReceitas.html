@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livro de Culinária — D&D</title>
+<style>
+  :root {
+    --font-sans: 'Palatino Linotype', Georgia, serif;
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --color-background-primary: #fdf8f0;
+    --color-background-secondary: #f5ede0;
+    --color-text-primary: #2c1e0f;
+    --color-text-secondary: #7a5c3a;
+    --color-border-tertiary: rgba(120, 80, 30, 0.18);
+    --color-border-secondary: rgba(120, 80, 30, 0.32);
+    --color-border-primary: rgba(120, 80, 30, 0.55);
+    --border-radius-md: 6px;
+    --border-radius-lg: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e8ddc8;
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    padding: 24px 16px;
+    color: var(--color-text-primary);
+  }
+  .page-title {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .book-wrap { background: #d4c4a8; border-radius: var(--border-radius-lg); padding: 16px; max-width: 780px; margin: 0 auto; }
+  .book { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+
+  .book-cover { padding: 28px 24px 20px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .cover-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .cover-label { font-size: 10px; font-weight: 500; letter-spacing: .08em; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: 4px; }
+  .cover-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); font-family: var(--font-serif); }
+  .cover-subtitle { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+  .cover-badge { background: #e8dcc8; color: #5c3d1a; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; border: 0.5px solid rgba(120,80,30,0.3); }
+
+  .cover-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .field-block { display: flex; flex-direction: column; gap: 4px; }
+  .field-label { font-size: 10px; font-weight: 500; letter-spacing: .06em; color: var(--color-text-secondary); text-transform: uppercase; }
+  .field-line { border: none; border-bottom: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-primary); font-size: 13px; font-family: var(--font-sans); padding: 3px 0; width: 100%; outline: none; }
+  .field-line:focus { border-bottom-color: var(--color-border-primary); }
+
+  .section-divider { padding: 10px 24px; background: var(--color-background-secondary); border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; color: var(--color-text-secondary); text-transform: uppercase; }
+  .add-btn { font-size: 12px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-secondary); cursor: pointer; transition: all .15s; }
+  .add-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+
+  .recipe-entry { border-bottom: 0.5px solid var(--color-border-tertiary); padding: 16px 24px; }
+  .recipe-entry:last-child { border-bottom: none; }
+  .entry-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .entry-num { width: 22px; height: 22px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); flex-shrink: 0; }
+  .entry-name-input { flex: 1; border: none; border-bottom: 0.5px solid var(--color-border-secondary); background: transparent; font-size: 15px; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary); padding: 2px 0; outline: none; }
+  .entry-name-input:focus { border-bottom-color: var(--color-border-primary); }
+  .entry-name-input::placeholder { color: var(--color-text-secondary); font-weight: 400; font-size: 14px; }
+
+  .lvl-select { font-size: 11px; padding: 3px 7px; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); color: var(--color-text-secondary); font-family: var(--font-sans); outline: none; cursor: pointer; }
+  .del-btn { width: 22px; height: 22px; border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all .15s; padding: 0; }
+  .del-btn:hover { background: #fde8e8; color: #a32d2d; }
+
+  .entry-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .entry-field { display: flex; flex-direction: column; gap: 3px; }
+
+  .ingr-area { margin-bottom: 10px; }
+  .ingr-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; min-height: 26px; padding: 4px 0; }
+  .ingr-tag { display: flex; align-items: center; gap: 4px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 3px 8px; font-size: 12px; color: var(--color-text-secondary); }
+  .ingr-tag button { border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; font-size: 12px; padding: 0; line-height: 1; display: flex; align-items: center; }
+  .ingr-tag button:hover { color: #a32d2d; }
+  .ingr-input-row { display: flex; gap: 6px; margin-top: 6px; }
+  .ingr-input-row input { flex: 1; border: none; border-bottom: 0.5px dashed var(--color-border-secondary); background: transparent; color: var(--color-text-primary); font-size: 12px; font-family: var(--font-sans); padding: 2px 0; outline: none; }
+  .ingr-input-row input:focus { border-bottom-color: var(--color-border-primary); }
+  .ingr-add-btn { font-size: 11px; padding: 3px 8px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; }
+
+  .tries-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .tries-label { font-size: 12px; color: var(--color-text-secondary); min-width: 130px; }
+  .try-dot { width: 20px; height: 20px; border-radius: 50%; border: 0.5px solid var(--color-border-secondary); background: transparent; cursor: pointer; transition: background .15s; flex-shrink: 0; }
+  .try-dot.done { background: #639922; border-color: #3B6D11; }
+  .tries-status { font-size: 11px; font-weight: 500; margin-left: 4px; }
+  .tries-unlocked { color: #3B6D11; }
+  .tries-pending { color: #854F0B; }
+
+  .notes-input { width: 100%; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); background: var(--color-background-secondary); color: var(--color-text-primary); font-size: 12px; font-family: var(--font-serif); padding: 8px 10px; resize: none; outline: none; line-height: 1.6; }
+  .notes-input:focus { border-color: var(--color-border-secondary); }
+  .notes-input::placeholder { color: var(--color-text-secondary); }
+
+  .source-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .source-opt { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; }
+  .source-opt input { accent-color: #639922; width: 13px; height: 13px; }
+
+  .book-footer { padding: 14px 24px; border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); display: flex; align-items: center; justify-content: space-between; }
+  .footer-stats { display: flex; gap: 16px; }
+  .stat-item { display: flex; flex-direction: column; gap: 1px; }
+  .stat-val { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-lbl { font-size: 10px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+
+  .empty-state { padding: 32px 24px; text-align: center; color: var(--color-text-secondary); font-size: 13px; }
+  .empty-state p { margin-bottom: 8px; }
+
+  @media (max-width: 560px) {
+    .cover-fields { grid-template-columns: 1fr 1fr; }
+    .entry-grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 400px) {
+    .cover-fields { grid-template-columns: 1fr; }
+    .entry-grid-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Grimório de Culinária — D&D 5e</p>
+
+<div class="book-wrap">
+<div class="book">
+
+  <div class="book-cover">
+    <div class="cover-top">
+      <div class="cover-title-area">
+        <div class="cover-label">Grimório pessoal</div>
+        <div class="cover-title">Livro de Culinária</div>
+        <div class="cover-subtitle">Receitas, anotações e segredos do fogão</div>
+      </div>
+      <span class="cover-badge" id="mastery-badge">Aprendiz</span>
+    </div>
+    <div class="cover-fields">
+      <div class="field-block">
+        <div class="field-label">Nome do personagem</div>
+        <input id="meta-character-name" class="field-line" type="text" placeholder="ex: Mira Folhagrossa" oninput="updateStats(); scheduleSave()">
+      </div>
+      <div class="field-block">
+        <div class="field-label">Classe / Raça</div>
+        <input id="meta-class-race" class="field-line" type="text" placeholder="ex: Druida Halfling" oninput="scheduleSave()">
+      </div>
+      <div class="field-block">
+        <div class="field-label">Especialidade culinária</div>
+        <input id="meta-specialty" class="field-line" type="text" placeholder="ex: Assados e defumados" oninput="scheduleSave()">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <span class="section-label">Receitas registradas</span>
+    <button class="add-btn" onclick="addRecipe()">+ Nova receita</button>
+  </div>
+
+  <div id="recipes-container">
+    <div class="empty-state">
+      <p>Nenhuma receita registrada ainda.</p>
+      <p style="font-size:12px">Adicione sua primeira receita com o botão acima.</p>
+    </div>
+  </div>
+
+  <div class="book-footer">
+    <div class="footer-stats">
+      <div class="stat-item">
+        <div class="stat-val" id="stat-total">0</div>
+        <div class="stat-lbl">Receitas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val" id="stat-mastered">0</div>
+        <div class="stat-lbl">Dominadas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val" id="stat-bonus">0</div>
+        <div class="stat-lbl">Com +2 bônus</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+let recipes = [];
+let counter = 0;
+
+const API_BASE = 'http://localhost:3000';
+let saveTimer = null;
+let lastSaved = null;
+
+const LEVEL_COLORS = {
+  '1': {bg:'#eaf3de', color:'#27500a'},
+  '2': {bg:'#faeeda', color:'#633806'},
+  '3': {bg:'#faece7', color:'#712b13'},
+  '4': {bg:'#eeedfe', color:'#3c3489'}
+};
+
+function getMeta() {
+  const characterName = document.getElementById('meta-character-name');
+  const classRace = document.getElementById('meta-class-race');
+  const specialty = document.getElementById('meta-specialty');
+  return {
+    characterName: characterName ? characterName.value : '',
+    classRace: classRace ? classRace.value : '',
+    specialty: specialty ? specialty.value : ''
+  };
+}
+
+function setMeta(meta) {
+  const m = meta || {};
+  const characterName = document.getElementById('meta-character-name');
+  const classRace = document.getElementById('meta-class-race');
+  const specialty = document.getElementById('meta-specialty');
+  if (characterName) characterName.value = m.characterName || '';
+  if (classRace) classRace.value = m.classRace || '';
+  if (specialty) specialty.value = m.specialty || '';
+}
+
+function normalizeRecipe(r) {
+  const base = {
+    id: 0,
+    name: '',
+    level: '1',
+    cd: '',
+    time: '',
+    source: 'experiencia',
+    ingredients: [],
+    tries: [false, false, false],
+    notes: '',
+    bonus: ''
+  };
+
+  const out = Object.assign({}, base, r || {});
+  out.id = Number(out.id) || 0;
+  out.level = String(out.level || '1');
+  if (!Array.isArray(out.ingredients)) out.ingredients = [];
+  if (!Array.isArray(out.tries) || out.tries.length !== 3) out.tries = [false, false, false];
+  return out;
+}
+
+function buildPayload() {
+  return Object.assign({}, getMeta(), {
+    recipes: recipes.map(normalizeRecipe)
+  });
+}
+
+async function loadFromServer() {
+  try {
+    const res = await fetch(API_BASE + '/livro-receitas', { method: 'GET' });
+    if (!res.ok) throw new Error('Falha ao carregar livro: ' + res.status);
+    const data = await res.json();
+
+    setMeta(data);
+    recipes = Array.isArray(data.recipes) ? data.recipes.map(normalizeRecipe) : [];
+    counter = recipes.reduce((m, rr) => Math.max(m, Number(rr.id) || 0), 0);
+
+    renderRecipes();
+    updateStats();
+  } catch (e) {
+    console.warn(e);
+    // Se a API estiver offline, a pagina ainda funciona em memoria.
+    renderRecipes();
+    updateStats();
+  }
+}
+
+async function saveToServer() {
+  const payload = buildPayload();
+  const json = JSON.stringify(payload);
+  if (json === lastSaved) return;
+
+  try {
+    const res = await fetch(API_BASE + '/livro-receitas', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: json
+    });
+    if (!res.ok) throw new Error('Falha ao salvar livro: ' + res.status);
+    lastSaved = json;
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToServer, 450);
+}
+
+function addRecipe(prefill) {
+  const id = ++counter;
+  const r = prefill || {id, name:'', level:'1', cd:'', time:'', source:'experiencia', ingredients:[], tries:[false,false,false], notes:'', bonus:''};
+  r.id = id;
+  recipes.push(r);
+  renderRecipes();
+  updateStats();
+  scheduleSave();
+}
+
+function removeRecipe(id) {
+  recipes = recipes.filter(r => r.id !== id);
+  renderRecipes();
+  updateStats();
+  scheduleSave();
+}
+
+function renderRecipes() {
+  const c = document.getElementById('recipes-container');
+  if (recipes.length === 0) {
+    c.innerHTML = '<div class="empty-state"><p>Nenhuma receita registrada ainda.</p><p style="font-size:12px">Adicione sua primeira receita com o botão acima.</p></div>';
+    return;
+  }
+  c.innerHTML = recipes.map((r, idx) => renderEntry(r, idx)).join('');
+}
+
+function renderEntry(r, idx) {
+  const lc = LEVEL_COLORS[r.level] || LEVEL_COLORS['1'];
+  const mastered = r.tries.every(t => t);
+  const triesDone = r.tries.filter(t => t).length;
+  return `
+  <div class="recipe-entry" id="entry-${r.id}">
+    <div class="entry-header">
+      <div class="entry-num">${idx + 1}</div>
+      <input class="entry-name-input" type="text" placeholder="Nome da receita..." value="${r.name}" oninput="updateField(${r.id},'name',this.value)">
+      <select class="lvl-select" onchange="updateField(${r.id},'level',this.value);renderRecipes();updateStats()" style="background:${lc.bg};color:${lc.color};border-color:${lc.color}40">
+        <option value="1" ${r.level==='1'?'selected':''}>Nível 1</option>
+        <option value="2" ${r.level==='2'?'selected':''}>Nível 2</option>
+        <option value="3" ${r.level==='3'?'selected':''}>Nível 3</option>
+        <option value="4" ${r.level==='4'?'selected':''}>Nível 4</option>
+      </select>
+      <button class="del-btn" onclick="removeRecipe(${r.id})" title="Remover">×</button>
+    </div>
+    <div class="entry-grid-3">
+      <div class="entry-field">
+        <div class="field-label">CD base</div>
+        <input class="field-line" type="text" placeholder="ex: 12" value="${r.cd}" oninput="updateField(${r.id},'cd',this.value)">
+      </div>
+      <div class="entry-field">
+        <div class="field-label">Tempo de preparo</div>
+        <input class="field-line" type="text" placeholder="ex: 1 hora" value="${r.time}" oninput="updateField(${r.id},'time',this.value)">
+      </div>
+      <div class="entry-field">
+        <div class="field-label">Bônus temático</div>
+        <input class="field-line" type="text" placeholder="ex: Força +2" value="${r.bonus}" oninput="updateField(${r.id},'bonus',this.value)">
+      </div>
+    </div>
+    <div class="ingr-area">
+      <div class="field-label">Ingredientes</div>
+      <div class="ingr-list" id="ingr-${r.id}">
+        ${r.ingredients.map((ing, i) => `<span class="ingr-tag">${ing}<button onclick="removeIngr(${r.id},${i})" title="Remover">×</button></span>`).join('')}
+      </div>
+      <div class="ingr-input-row">
+        <input type="text" placeholder="Adicionar ingrediente..." id="ingr-input-${r.id}" onkeydown="if(event.key==='Enter')addIngr(${r.id})">
+        <button class="ingr-add-btn" onclick="addIngr(${r.id})">Adicionar</button>
+      </div>
+    </div>
+    <div class="tries-row">
+      <div class="tries-label">Vezes preparada</div>
+      ${r.tries.map((t, i) => `<div class="try-dot ${t?'done':''}" onclick="toggleTry(${r.id},${i})" title="${t?'Desmarcar':'Marcar como feito'}"></div>`).join('')}
+      <span class="tries-status ${mastered?'tries-unlocked':'tries-pending'}">${mastered ? '+2 desbloqueado' : triesDone + '/3 tentativas'}</span>
+    </div>
+    <div class="entry-field" style="margin-bottom:10px">
+      <div class="field-label" style="margin-bottom:5px">Origem da receita</div>
+      <div class="source-row">
+        <label class="source-opt"><input type="radio" name="src-${r.id}" value="experiencia" ${r.source==='experiencia'?'checked':''} onchange="updateField(${r.id},'source',this.value)"> Experiência própria</label>
+        <label class="source-opt"><input type="radio" name="src-${r.id}" value="escrita" ${r.source==='escrita'?'checked':''} onchange="updateField(${r.id},'source',this.value)"> Receita escrita</label>
+        <label class="source-opt"><input type="radio" name="src-${r.id}" value="mestre" ${r.source==='mestre'?'checked':''} onchange="updateField(${r.id},'source',this.value)"> Ensinada por mestre</label>
+        <label class="source-opt"><input type="radio" name="src-${r.id}" value="lendaria" ${r.source==='lendaria'?'checked':''} onchange="updateField(${r.id},'source',this.value)"> Receita lendária</label>
+      </div>
+    </div>
+    <div class="entry-field">
+      <div class="field-label" style="margin-bottom:5px">Notas pessoais / efeitos especiais observados</div>
+      <textarea class="notes-input" rows="3" placeholder="Ex: Adicionar alga bioluminescente eleva o resultado em 2 pontos..." oninput="updateField(${r.id},'notes',this.value)">${r.notes}</textarea>
+    </div>
+  </div>`;
+}
+
+function updateField(id, field, val) {
+  const r = recipes.find(r => r.id === id);
+  if (r) r[field] = val;
+  updateStats();
+  scheduleSave();
+}
+
+function addIngr(id) {
+  const inp = document.getElementById('ingr-input-' + id);
+  const val = inp.value.trim();
+  if (!val) return;
+  const r = recipes.find(r => r.id === id);
+  r.ingredients.push(val);
+  inp.value = '';
+  const list = document.getElementById('ingr-' + id);
+  const idx = r.ingredients.length - 1;
+  const span = document.createElement('span');
+  span.className = 'ingr-tag';
+  span.innerHTML = `${val}<button onclick="removeIngr(${id},${idx})" title="Remover">×</button>`;
+  list.appendChild(span);
+  scheduleSave();
+}
+
+function removeIngr(id, idx) {
+  const r = recipes.find(r => r.id === id);
+  r.ingredients.splice(idx, 1);
+  scheduleSave();
+  const list = document.getElementById('ingr-' + id);
+  list.innerHTML = r.ingredients.map((ing, i) => `<span class="ingr-tag">${ing}<button onclick="removeIngr(${id},${i})" title="Remover">×</button></span>`).join('');
+}
+
+function toggleTry(id, idx) {
+  const r = recipes.find(r => r.id === id);
+  r.tries[idx] = !r.tries[idx];
+  const dots = document.querySelectorAll(`#entry-${id} .try-dot`);
+  dots[idx].classList.toggle('done', r.tries[idx]);
+  const mastered = r.tries.every(t => t);
+  const done = r.tries.filter(t => t).length;
+  const status = document.querySelector(`#entry-${id} .tries-status`);
+  status.textContent = mastered ? '+2 desbloqueado' : done + '/3 tentativas';
+  status.className = 'tries-status ' + (mastered ? 'tries-unlocked' : 'tries-pending');
+  updateStats();
+  scheduleSave();
+}
+
+function updateStats() {
+  const total = recipes.length;
+  const mastered = recipes.filter(r => r.tries.every(t => t)).length;
+  const withBonus = recipes.filter(r => r.tries.every(t => t) || r.source === 'escrita' || r.source === 'mestre' || r.source === 'lendaria').length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-mastered').textContent = mastered;
+  document.getElementById('stat-bonus').textContent = withBonus;
+
+  const badge = document.getElementById('mastery-badge');
+  if (total === 0)         { badge.textContent = 'Aprendiz'; }
+  else if (mastered < 3)   { badge.textContent = 'Cozinheiro'; }
+  else if (mastered < 6)   { badge.textContent = 'Cozinheiro habilidoso'; }
+  else if (mastered < 10)  { badge.textContent = 'Chefe viajante'; }
+  else                     { badge.textContent = 'Mestre culinário'; }
+}
+loadFromServer();
+</script>
+</body>
+</html>

@@ -145,6 +145,26 @@ input:focus {
     box-shadow: 0 0 5px #ff0000;
 }
 
+.botaoLivroReceitas:hover {
+    color: #aaa;
+    background-color: #530985;
+    transform: scale(1.05);
+    box-shadow: 0 0 5px #530985;
+}
+
+.botaoLivroReceitas {
+    position: fixed;
+    bottom: 35px;
+    left: 20px;
+    width: 140px;
+    height: 40px;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+    background: #8b0000;
+    color: white;
+    box-shadow: 0 0 5px #ff0000;
+}
+
 .fab {
     position: fixed;
     bottom: 95px;
@@ -182,5 +202,18 @@ input:focus {
 .texto-formatado {
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.livro-receitas-frame-wrap {
+    width: 100%;
+}
+
+.livro-receitas-frame {
+    width: 100%;
+    height: calc(100vh - 140px);
+    border: none;
+    border-radius: 12px;
+    background: #e8ddc8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
 }
 

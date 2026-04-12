@@ -4,6 +4,7 @@ angular.module('DMShield', ['ngRoute','ui.select','ngSanitize'])
   
   $routeProvider
   .when('/',    { templateUrl: 'Views/home.html' })
+  .when('/LivroReceitas', { templateUrl: 'Views/LivroReceitas.html' })
   .when('/Inimigos', { templateUrl: 'Views/Inimigos.html', controller: 'EnemiesCtrl' })
   .when('/NPCs', { templateUrl: 'Views/NPCs.html', controller: 'NPCsCtrl' })
   .when('/Recursos', { templateUrl: 'Views/Recursos.html', controller: 'RecursosCtrl' })

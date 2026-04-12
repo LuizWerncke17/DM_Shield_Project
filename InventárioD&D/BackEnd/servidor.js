@@ -32,6 +32,17 @@ db.connect(err => {
         console.log("Erro ao garantir tabela sessoes:", tableErr);
       }
     });
+
+    db.query(`
+      CREATE TABLE IF NOT EXISTS livro_receitas (
+        id INT PRIMARY KEY,
+        dados LONGTEXT DEFAULT NULL
+      )
+    `, (tableErr) => {
+      if (tableErr) {
+        console.log("Erro ao garantir tabela livro_receitas:", tableErr);
+      }
+    });
   }
 });
 
@@ -640,6 +651,51 @@ app.delete('/sessoes/:id', (req, res) => {
     }
 
     res.send({ message: 'Sessao removida!' });
+  });
+});
+
+
+//-----------------------------------------------------LIVRO DE RECEITAS------------------------------------------------------
+
+const LIVRO_RECEITAS_DEFAULT = {
+  characterName: '',
+  classRace: '',
+  specialty: '',
+  recipes: []
+};
+
+app.get('/livro-receitas', (req, res) => {
+  db.query('SELECT dados FROM livro_receitas WHERE id = 1', (err, results) => {
+    if (err) return res.status(500).send(err);
+
+    if (!results || results.length === 0 || !results[0].dados) {
+      return res.send(LIVRO_RECEITAS_DEFAULT);
+    }
+
+    try {
+      const dados = JSON.parse(results[0].dados);
+      res.send(dados || LIVRO_RECEITAS_DEFAULT);
+    } catch (e) {
+      res.send(LIVRO_RECEITAS_DEFAULT);
+    }
+  });
+});
+
+app.put('/livro-receitas', (req, res) => {
+  const dados = req.body && Object.keys(req.body).length ? req.body : LIVRO_RECEITAS_DEFAULT;
+
+  const sql = `
+    INSERT INTO livro_receitas (id, dados)
+    VALUES (1, ?)
+    ON DUPLICATE KEY UPDATE dados = VALUES(dados)
+  `;
+
+  db.query(sql, [JSON.stringify(dados)], (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    res.send({ message: 'Livro de receitas salvo!' });
   });
 });
 
